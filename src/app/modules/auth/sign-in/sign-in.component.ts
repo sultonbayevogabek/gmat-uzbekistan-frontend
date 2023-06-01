@@ -47,21 +47,24 @@ export class AuthSignInComponent implements OnInit {
 
       let { phone, password } = this.signInForm.value;
       this._authService.signIn({
-         phone: `+998${ phone}`,
+         phone: `+998${ phone }`,
          password
       })
          .subscribe(
-            (res) => {
-               this._router.navigateByUrl('/confirmation-required');
+            () => {
             },
-            (error) => {
+            ({ error: { error }}) => {
                this.signInForm.enable();
 
-               if (error?.error?.errors?.includes('User not found')) {
+               if (error === 'User has been blocked by system') {
+                  this.alert.message = `Foydalanuvchi bloklangan`;
+               }
+
+               if (error === 'User not found') {
                   this.alert.message = `Bu raqam tizimda ro'yxatdan o'tmagan`;
                }
 
-               if (error?.error?.errors?.includes('Incorrect password')) {
+               if (error === 'Incorrect password') {
                   this.alert.message = `Parol noto'g'ri`;
                }
 
