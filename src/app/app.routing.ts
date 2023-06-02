@@ -4,11 +4,8 @@ import {LayoutComponent} from 'app/layout/layout.component';
 import {InitialDataResolver} from 'app/app.resolvers';
 
 export const appRoutes: Route[] = [
-    {path: '', pathMatch: 'full', redirectTo: 'dashboards/project'},
+    { path: '', pathMatch: 'full', redirectTo: 'lessons' },
 
-    {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboards/project'},
-
-    // Auth routes for guests
     {
         path: '',
         component: LayoutComponent,
@@ -28,23 +25,7 @@ export const appRoutes: Route[] = [
     },
     {
         path: '',
-        component: LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children: [
-            {
-                path: 'home',
-                loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)
-            },
-        ]
-    },
-
-    // Admin routes
-    {
-        path: '',
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,

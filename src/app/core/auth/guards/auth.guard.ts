@@ -24,14 +24,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       if (!this._authService.token) {
-         return this._router.navigate(['/sign-in'])
+         this._router.navigate(['/sign-in'])
+         return false
       }
 
-      if (this._userService.user) {
-         return true;
+      if (!this._userService.user) {
+         this._userService.getUser()
       }
 
-      this._userService.getUser()
+      return true
    }
 
    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
