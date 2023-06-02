@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
-import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
+import { IUser } from '../../../interfaces/user.interface';
 
 @Component({
     selector       : 'user',
@@ -19,7 +19,7 @@ export class UserComponent implements OnInit, OnDestroy
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: User;
+    user: IUser;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -44,14 +44,14 @@ export class UserComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to user changes
-        this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // this._userService.user$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((user: IUser) => {
+        //         this.user = user;
+        //
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
     }
 
     /**
@@ -82,10 +82,7 @@ export class UserComponent implements OnInit, OnDestroy
         }
 
         // Update the user
-        this._userService.update({
-            ...this.user,
-            status
-        }).subscribe();
+        // this._userService.update(this.user).subscribe();
     }
 
     /**

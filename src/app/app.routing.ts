@@ -1,6 +1,5 @@
 import {Route} from '@angular/router';
 import {AuthGuard} from 'app/core/auth/guards/auth.guard';
-import {NoAuthGuard} from 'app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from 'app/layout/layout.component';
 import {InitialDataResolver} from 'app/app.resolvers';
 
@@ -12,25 +11,11 @@ export const appRoutes: Route[] = [
     // Auth routes for guests
     {
         path: '',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty'
         },
         children: [
-            {
-                path: 'confirmation-required',
-                loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.module').then(m => m.AuthConfirmationRequiredModule)
-            },
-            {
-                path: 'forgot-password',
-                loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)
-            },
-            {
-                path: 'reset-password',
-                loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)
-            },
             {
                 path: 'sign-in',
                 loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)
@@ -41,29 +26,6 @@ export const appRoutes: Route[] = [
             }
         ]
     },
-
-    // Auth routes for authenticated users
-    {
-        path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children: [
-            {
-                path: 'sign-out',
-                loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)
-            },
-            {
-                path: 'unlock-session',
-                loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)
-            }
-        ]
-    },
-
-    // Landing routes
     {
         path: '',
         component: LayoutComponent,
@@ -81,37 +43,13 @@ export const appRoutes: Route[] = [
     // Admin routes
     {
         path: '',
-        // canActivate: [AuthGuard],
-        // canActivateChild: [AuthGuard],
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
         },
         children: [
-
-            // Dashboards
-            {
-                path: 'dashboards', children: [
-                    {
-                        path: 'project',
-                        loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)
-                    },
-                    {
-                        path: 'analytics',
-                        loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.module').then(m => m.AnalyticsModule)
-                    },
-                    {
-                        path: 'finance',
-                        loadChildren: () => import('app/modules/admin/dashboards/finance/finance.module').then(m => m.FinanceModule)
-                    },
-                    {
-                        path: 'crypto',
-                        loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.module').then(m => m.CryptoModule)
-                    },
-                ]
-            },
-
-            // Apps
             {
                 path: 'apps', children: [
                     {
@@ -125,35 +63,7 @@ export const appRoutes: Route[] = [
                     {
                         path: 'contacts',
                         loadChildren: () => import('app/modules/admin/apps/contacts/contacts.module').then(m => m.ContactsModule)
-                    },
-                    {
-                        path: 'ecommerce',
-                        loadChildren: () => import('app/modules/admin/apps/ecommerce/ecommerce.module').then(m => m.ECommerceModule)
-                    },
-                    {
-                        path: 'file-manager',
-                        loadChildren: () => import('app/modules/admin/apps/file-manager/file-manager.module').then(m => m.FileManagerModule)
-                    },
-                    {
-                        path: 'help-center',
-                        loadChildren: () => import('app/modules/admin/apps/help-center/help-center.module').then(m => m.HelpCenterModule)
-                    },
-                    {
-                        path: 'mailbox',
-                        loadChildren: () => import('app/modules/admin/apps/mailbox/mailbox.module').then(m => m.MailboxModule)
-                    },
-                    {
-                        path: 'notes',
-                        loadChildren: () => import('app/modules/admin/apps/notes/notes.module').then(m => m.NotesModule)
-                    },
-                    {
-                        path: 'scrumboard',
-                        loadChildren: () => import('app/modules/admin/apps/scrumboard/scrumboard.module').then(m => m.ScrumboardModule)
-                    },
-                    {
-                        path: 'tasks',
-                        loadChildren: () => import('app/modules/admin/apps/tasks/tasks.module').then(m => m.TasksModule)
-                    },
+                    }
                 ]
             },
 
