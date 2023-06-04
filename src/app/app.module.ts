@@ -14,6 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { HttpHandlerInterceptor } from './interceptors/http.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {SocialLoginModule, GoogleLoginProvider, SocialAuthServiceConfig} from "@abacritt/angularx-social-login";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -41,7 +42,7 @@ const routerConfig: ExtraOptions = {
         LayoutModule,
 
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
     ],
     bootstrap   : [
         AppComponent
@@ -51,6 +52,23 @@ const routerConfig: ExtraOptions = {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpHandlerInterceptor,
             multi: true
+        },
+        {
+            provide: 'SocialAuthServiceConfig',
+            useValue: {
+                autoLogin: false,
+                providers: [
+                    {
+                        id: GoogleLoginProvider.PROVIDER_ID,
+                        provider: new GoogleLoginProvider(
+                            '532709345111-gv3sdg2incups7mkgqh503ksottj6iid.apps.googleusercontent.com'
+                        )
+                    }
+                ],
+                onError: (err) => {
+                    console.error(err);
+                }
+            } as SocialAuthServiceConfig,
         }
     ]
 })

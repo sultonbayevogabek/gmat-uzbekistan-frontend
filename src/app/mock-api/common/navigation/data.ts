@@ -7,28 +7,28 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Darslar',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
-        link: '/apps/academy'
+        link: '/lessons'
     },
     {
         id: 'messages',
         title: 'Xabarlar',
         type: 'basic',
         icon: 'heroicons_outline:chat-alt',
-        link: '/apps/chat'
+        link: '/chat'
     },
     {
         id: 'teachers',
         title: `Foydalanuvchilar`,
         type: 'basic',
         icon: 'heroicons_outline:user-group',
-        link: '/apps/contacts'
+        link: '/users'
     },
     {
         id: 'settings',
         title: `Sozlamalar`,
         type: 'basic',
         icon: 'heroicons_outline:cog',
-        link: '/pages/settings'
+        link: '/settings'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

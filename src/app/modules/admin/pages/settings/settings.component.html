@@ -12,7 +12,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between m-8 mr-6 sm:my-10">
                 <!-- Title -->
-                <div class="text-4xl font-extrabold tracking-tight leading-none">Settings</div>
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Sozlamalar</div>
                 <!-- Close button -->
                 <div class="lg:hidden">
                     <button
@@ -68,7 +68,7 @@
 
                     <!-- Panel title -->
                     <div class="ml-2 lg:ml-0 text-3xl font-bold tracking-tight leading-none">
-                        {{getPanelInfo(selectedPanel).title}}
+                        {{ getPanelInfo(selectedPanel).title }}
                     </div>
                 </div>
 
@@ -86,10 +86,6 @@
                         <!-- Plan & Billing -->
                         <ng-container *ngSwitchCase="'plan-billing'">
                             <settings-plan-billing></settings-plan-billing>
-                        </ng-container>
-                        <!-- Notifications -->
-                        <ng-container *ngSwitchCase="'notifications'">
-                            <settings-notifications></settings-notifications>
                         </ng-container>
                         <!-- Team -->
                         <ng-container *ngSwitchCase="'team'">

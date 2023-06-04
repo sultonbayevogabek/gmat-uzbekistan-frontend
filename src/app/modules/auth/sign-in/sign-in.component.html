@@ -138,10 +138,17 @@
                     <div class="flex-auto mt-px border-t"></div>
                 </div>
 
+                <asl-google-signin-button
+                    [class]="'bg-red-400'"
+                    #googleAuthButton>
+                    Google
+                </asl-google-signin-button>
+
                 <button
+                        (click)="$event.preventDefault(); googleAuthButton.click()"
+                        mat-stroked-button
                         class="w-full mt-8 text-secondary"
                         type="button"
-                        mat-stroked-button
                         title="Google orqali kirish"
                 >
                     <mat-icon

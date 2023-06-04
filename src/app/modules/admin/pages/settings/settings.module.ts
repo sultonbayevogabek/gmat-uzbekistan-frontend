@@ -14,7 +14,6 @@ import { SettingsComponent } from 'app/modules/admin/pages/settings/settings.com
 import { SettingsAccountComponent } from 'app/modules/admin/pages/settings/account/account.component';
 import { SettingsSecurityComponent } from 'app/modules/admin/pages/settings/security/security.component';
 import { SettingsPlanBillingComponent } from 'app/modules/admin/pages/settings/plan-billing/plan-billing.component';
-import { SettingsNotificationsComponent } from 'app/modules/admin/pages/settings/notifications/notifications.component';
 import { SettingsTeamComponent } from 'app/modules/admin/pages/settings/team/team.component';
 import { settingsRoutes } from 'app/modules/admin/pages/settings/settings.routing';
 
@@ -24,7 +23,6 @@ import { settingsRoutes } from 'app/modules/admin/pages/settings/settings.routin
         SettingsAccountComponent,
         SettingsSecurityComponent,
         SettingsPlanBillingComponent,
-        SettingsNotificationsComponent,
         SettingsTeamComponent
     ],
     imports     : [

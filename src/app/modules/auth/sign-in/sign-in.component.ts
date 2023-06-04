@@ -1,10 +1,15 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import { UserService } from '../../../core/user/user.service';
+import {
+    SocialAuthService as GoogleAuthService,
+    GoogleLoginProvider,
+    SocialUser,
+    SocialAuthService
+} from '@abacritt/angularx-social-login';
 
 @Component({
    selector: 'auth-sign-in',
@@ -15,6 +20,7 @@ import { UserService } from '../../../core/user/user.service';
 
 export class AuthSignInComponent implements OnInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
+   @ViewChild('googleAuthButton', { static: true }) googleAuthButton: ElementRef;
 
    alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
    signInForm: UntypedFormGroup;
@@ -24,17 +30,21 @@ export class AuthSignInComponent implements OnInit {
       private _authService: AuthService,
       private _formBuilder: UntypedFormBuilder,
       private _router: Router,
-      private _userService: UserService
+      private _socialAuthService: SocialAuthService
    ) {
    }
 
    ngOnInit(): void {
+       console.log(this.googleAuthButton)
       this._authService.signOut();
       this.signInForm = this._formBuilder.group({
             phone: ['999639773', Validators.required],
             password: ['Ogabek19991031', [Validators.required, Validators.minLength(6)]]
          }
       );
+       this._socialAuthService.authState.subscribe((user) => {
+           this._authService.googleAuth(user.idToken)
+       });
    }
 
    signUp(): void {

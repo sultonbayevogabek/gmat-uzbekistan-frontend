@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from 'app/core/user/user.service';
 import { IUser } from '../../../interfaces/user.interface';
 
 @Component({
@@ -28,8 +27,7 @@ export class UserComponent implements OnInit, OnDestroy
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _userService: UserService
+        private _router: Router
     )
     {
     }

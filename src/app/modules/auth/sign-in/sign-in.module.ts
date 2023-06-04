@@ -10,22 +10,24 @@ import { SharedModule } from 'app/shared/shared.module';
 import { AuthSignInComponent } from 'app/modules/auth/sign-in/sign-in.component';
 import { authSignInRoutes } from 'app/modules/auth/sign-in/sign-in.routing';
 import { NgxMaskModule } from 'ngx-mask';
+import {SocialLoginModule} from "@abacritt/angularx-social-login";
 
 @NgModule({
     declarations: [
         AuthSignInComponent
     ],
-   imports: [
-      RouterModule.forChild(authSignInRoutes),
-      MatButtonModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatProgressSpinnerModule,
-      FuseAlertModule,
-      SharedModule,
-      NgxMaskModule.forRoot()
-   ]
+    imports: [
+        RouterModule.forChild(authSignInRoutes),
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        FuseAlertModule,
+        SharedModule,
+        NgxMaskModule.forRoot(),
+        SocialLoginModule
+    ]
 })
 export class AuthSignInModule {
 }

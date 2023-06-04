@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import { UserService } from '../../../core/user/user.service';
 
 @Component({
    selector: 'auth-sign-up',
@@ -23,8 +22,7 @@ export class AuthSignUpComponent implements OnInit {
    constructor(
       private _authService: AuthService,
       private _formBuilder: UntypedFormBuilder,
-      private _router: Router,
-      private _userService: UserService
+      private _router: Router
    ) {
    }
 

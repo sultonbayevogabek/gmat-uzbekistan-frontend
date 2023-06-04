@@ -7,9 +7,8 @@ import {
    RouterStateSnapshot,
    UrlTree
 } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
-import { UserService } from '../../user/user.service';
 
 @Injectable({
    providedIn: 'root'
@@ -17,8 +16,7 @@ import { UserService } from '../../user/user.service';
 export class AuthGuard implements CanActivate, CanActivateChild {
    constructor(
       private _authService: AuthService,
-      private _router: Router,
-      private _userService: UserService
+      private _router: Router
    ) {
    }
 
@@ -28,8 +26,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
          return false
       }
 
-      if (!this._userService.user) {
-         this._userService.getUser()
+      if (!this._authService.user) {
+         this._authService.getUser()
       }
 
       return true
