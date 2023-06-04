@@ -5,12 +5,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import {
-    SocialAuthService as GoogleAuthService,
-    GoogleLoginProvider,
-    SocialUser,
     SocialAuthService
 } from '@abacritt/angularx-social-login';
-import { GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
 
 
 @Component({
@@ -20,9 +16,8 @@ import { GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
    animations: fuseAnimations
 })
 
-export class AuthSignInComponent implements OnInit, AfterViewInit {
+export class AuthSignInComponent implements OnInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
-    @ViewChild('googleAuthButton') googleAuthButton: ElementRef;
 
 
     alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
@@ -48,16 +43,6 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
            this._authService.googleAuth(user.idToken)
        });
    }
-
-   ngAfterViewInit() {
-       console.log(document.querySelector('.nsm7Bb-HzV7m-LgbsSe-Bz112c'));
-       console.log(this.googleAuthButton)
-       this.applyCustomStyles();
-   }
-
-    applyCustomStyles() {
-
-    }
 
    signUp(): void {
       if (this.signInForm.invalid) {

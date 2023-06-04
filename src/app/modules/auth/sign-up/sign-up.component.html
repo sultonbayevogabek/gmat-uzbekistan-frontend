@@ -157,17 +157,28 @@
                     <div class="flex-auto mt-px border-t"></div>
                 </div>
 
-                <button
-                        class="w-full mt-8 text-secondary"
-                        type="button"
-                        mat-stroked-button
-                        title="Google orqali ro'yxatdan o'tish"
-                >
-                    <mat-icon
-                            class="icon-size-5 mr-2"
-                            [svgIcon]="'heroicons_solid:google'"></mat-icon>
-                    <span>Google</span>
-                </button>
+                <div class="relative cursor-pointer" title="Google orqali ro'yxatdan o'tish">
+                    <button
+                            mat-stroked-button
+                            class="w-full mt-8 text-secondary"
+                            type="button"
+                    >
+                        <mat-icon
+                                class="icon-size-5 mr-2"
+                                [svgIcon]="'heroicons_solid:google'"></mat-icon>
+                        <span>Google</span>
+                    </button>
+
+                    <div class="flex absolute bottom-0 left-0 z-10 opacity-0">
+                        <asl-google-signin-button
+                                *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
+                                [text]="'signin_with'"
+                                [size]="'large'"
+                                #googleAuthButton>
+
+                        </asl-google-signin-button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
