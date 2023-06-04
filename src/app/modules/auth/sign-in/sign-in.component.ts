@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
@@ -10,6 +10,8 @@ import {
     SocialUser,
     SocialAuthService
 } from '@abacritt/angularx-social-login';
+import { GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
+
 
 @Component({
    selector: 'auth-sign-in',
@@ -18,11 +20,12 @@ import {
    animations: fuseAnimations
 })
 
-export class AuthSignInComponent implements OnInit {
+export class AuthSignInComponent implements OnInit, AfterViewInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
-   @ViewChild('googleAuthButton', { static: true }) googleAuthButton: ElementRef;
+    @ViewChild('googleAuthButton') googleAuthButton: ElementRef;
 
-   alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
+
+    alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
    signInForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -35,7 +38,6 @@ export class AuthSignInComponent implements OnInit {
    }
 
    ngOnInit(): void {
-       console.log(this.googleAuthButton)
       this._authService.signOut();
       this.signInForm = this._formBuilder.group({
             phone: ['999639773', Validators.required],
@@ -46,6 +48,16 @@ export class AuthSignInComponent implements OnInit {
            this._authService.googleAuth(user.idToken)
        });
    }
+
+   ngAfterViewInit() {
+       console.log(document.querySelector('.nsm7Bb-HzV7m-LgbsSe-Bz112c'));
+       console.log(this.googleAuthButton)
+       this.applyCustomStyles();
+   }
+
+    applyCustomStyles() {
+
+    }
 
    signUp(): void {
       if (this.signInForm.invalid) {
