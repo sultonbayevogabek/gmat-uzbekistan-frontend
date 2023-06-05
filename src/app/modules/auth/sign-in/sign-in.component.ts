@@ -41,6 +41,13 @@ export class AuthSignInComponent implements OnInit {
       );
        this._socialAuthService.authState.subscribe((user) => {
            this._authService.googleAuth(user.idToken)
+              .subscribe(null, ({ error: { error } }) => {
+                    if (error === 'User has been blocked by system') {
+                       this.alert.message = `Foydalanuvchi bloklangan`;
+                    }
+                    this.showAlert = true;
+                 }
+              );
        });
    }
 

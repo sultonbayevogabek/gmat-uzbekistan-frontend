@@ -82,9 +82,14 @@ export class AuthService {
     }
 
     googleAuth(idToken: string) {
-        this._httpClient.post(environment.host + 'google-auth', { idToken })
-            .subscribe((res) => {
-                console.log(res)
-            })
+        return this._httpClient.post(environment.host + 'google-auth', { idToken }).pipe(
+           switchMap((response: { ok: boolean; user: IUser; token: string }) => {
+              this.token = response.token;
+              this.user = response.user;
+              this._userObservable.next(response.user);
+              this._router.navigate(['lessons']).then();
+              return of(response);
+           })
+        )
     }
 }

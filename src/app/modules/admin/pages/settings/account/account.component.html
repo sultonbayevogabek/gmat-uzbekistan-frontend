@@ -1,170 +1,130 @@
 <div class="w-full max-w-3xl">
-
-    <!-- Form -->
     <form [formGroup]="accountForm">
+        <div class="text-xl w-full">Shaxsiy ma'lumotlar</div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-4">
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Ism</mat-label>
+                    <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:user'"
+                            matPrefix></mat-icon>
+                    <input
+                            [formControlName]="'name'"
+                            matInput>
+                </mat-form-field>
+            </div>
 
-        <!-- Section -->
-        <div class="w-full">
-            <div class="text-xl">Profile</div>
-            <div class="text-secondary">Following information is publicly displayed, be careful!</div>
-        </div>
-        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
-            <!-- Name -->
-            <div class="sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Name</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:user'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'name'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Username -->
-            <div class="sm:col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full">
-                    <mat-label>Username</mat-label>
-                    <div
-                        class="text-secondary"
-                        matPrefix>
-                        fusetheme.com/
-                    </div>
-                    <input
-                        [formControlName]="'username'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Title -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Title</mat-label>
+                    <mat-label>Telefon raqam</mat-label>
                     <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:briefcase'"
-                        matPrefix></mat-icon>
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:phone'"
+                            matPrefix></mat-icon>
                     <input
-                        [formControlName]="'title'"
-                        matInput>
+                            id="phone"
+                            matInput
+                            [formControlName]="'phone'"
+                            [prefix]="'+998 '"
+                            mask="00-000-00-00"
+                    >
                 </mat-form-field>
             </div>
-            <!-- Company -->
-            <div class="sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Company</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:office-building'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'company'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- About -->
-            <div class="sm:col-span-4">
-                <mat-form-field class="fuse-mat-textarea fuse-mat-no-subscript w-full">
-                    <mat-label>About</mat-label>
-                    <textarea
-                        matInput
-                        [formControlName]="'about'"
-                        cdkTextareaAutosize
-                        [cdkAutosizeMinRows]="5"></textarea>
-                </mat-form-field>
-                <div class="mt-1 text-md text-hint">Brief description for your profile. Basic HTML and Emoji are allowed.</div>
-            </div>
-        </div>
 
-        <!-- Divider -->
-        <div class="my-10 border-t"></div>
-
-        <!-- Section -->
-        <div class="w-full">
-            <div class="text-xl">Personal Information</div>
-            <div class="text-secondary">Communication details in case we want to connect with you. These will be kept private.</div>
-        </div>
-        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
-            <!-- Email -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Email</mat-label>
+                    <mat-label>Elektron pochta</mat-label>
                     <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:mail'"
-                        matPrefix></mat-icon>
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                            matPrefix></mat-icon>
                     <input
-                        [formControlName]="'email'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Phone -->
-            <div class="sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Phone</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:phone'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'phone'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Country -->
-            <div class="sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Country</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:location-marker'"
-                        matPrefix></mat-icon>
-                    <mat-select [formControlName]="'country'">
-                        <mat-option [value]="'usa'">United States</mat-option>
-                        <mat-option [value]="'canada'">Canada</mat-option>
-                        <mat-option [value]="'mexico'">Mexico</mat-option>
-                        <mat-option [value]="'france'">France</mat-option>
-                        <mat-option [value]="'germany'">Germany</mat-option>
-                        <mat-option [value]="'italy'">Italy</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <!-- Language -->
-            <div class="sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Language</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:globe-alt'"
-                        matPrefix></mat-icon>
-                    <mat-select [formControlName]="'language'">
-                        <mat-option [value]="'english'">English</mat-option>
-                        <mat-option [value]="'french'">French</mat-option>
-                        <mat-option [value]="'spanish'">Spanish</mat-option>
-                        <mat-option [value]="'german'">German</mat-option>
-                        <mat-option [value]="'italian'">Italian</mat-option>
-                    </mat-select>
+                            id="email"
+                            matInput
+                            [formControlName]="'email'"
+                            readonly
+                    >
                 </mat-form-field>
             </div>
         </div>
 
-        <!-- Divider -->
-        <div class="mt-11 mb-10 border-t"></div>
-
-        <!-- Actions -->
-        <div class="flex items-center justify-end">
+        <div class="flex items-center justify-end pt-6">
             <button
-                mat-stroked-button
-                type="button">
-                Cancel
-            </button>
-            <button
-                class="ml-4"
-                mat-flat-button
-                type="button"
-                [color]="'primary'">Save
+                    class="ml-4"
+                    mat-flat-button
+                    type="button"
+                    [color]="'primary'">Tahrirlash
             </button>
         </div>
     </form>
 
+    <div class="mt-11 mb-10 border-t"></div>
+
+    <div class="text-xl w-full">Parolni o'zgartirish</div>
+    <div class="grid sm:grid-cols-4 gap-6 w-full mt-4">
+        <div class="sm:col-span-2">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+                <mat-label>Eski parol</mat-label>
+                <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:lock-closed'"
+                        matPrefix></mat-icon>
+                <input
+                        matInput
+                        #oldPasswordField
+                >
+                <button
+                        mat-icon-button
+                        type="button"
+                        (click)="oldPasswordField.type === 'password' ? oldPasswordField.type = 'text' : oldPasswordField.type = 'password'"
+                        matSuffix>
+                    <mat-icon
+                            class="icon-size-5"
+                            *ngIf="oldPasswordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    <mat-icon
+                            class="icon-size-5"
+                            *ngIf="oldPasswordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        <div class="sm:col-span-2">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+                <mat-label>Yangi parol</mat-label>
+                <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:lock-closed'"
+                        matPrefix></mat-icon>
+                <input
+                        matInput
+                        #newPasswordField
+                >
+                <button
+                        mat-icon-button
+                        type="button"
+                        (click)="newPasswordField.type === 'password' ? newPasswordField.type = 'text' : newPasswordField.type = 'password'"
+                        matSuffix>
+                    <mat-icon
+                            class="icon-size-5"
+                            *ngIf="newPasswordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    <mat-icon
+                            class="icon-size-5"
+                            *ngIf="newPasswordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="flex items-center justify-end pt-6">
+        <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'">O'zgartirish
+        </button>
+    </div>
 </div>

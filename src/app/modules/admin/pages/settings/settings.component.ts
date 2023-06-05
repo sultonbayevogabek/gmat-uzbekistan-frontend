@@ -51,12 +51,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 description: `Profil ma'lumotlarini o'zgartirish`
             },
             {
-                id: 'security',
-                icon: 'heroicons_outline:lock-closed',
-                title: 'Xavfsizlik',
-                description: `'Hisobga kirish uchun parolni o'zgartirish`
-            },
-            {
                 id: 'plan-billing',
                 icon: 'heroicons_outline:credit-card',
                 title: `To'lov`,

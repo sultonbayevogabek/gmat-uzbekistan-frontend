@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
    selector: 'auth-sign-up',
@@ -22,7 +23,8 @@ export class AuthSignUpComponent implements OnInit {
    constructor(
       private _authService: AuthService,
       private _formBuilder: UntypedFormBuilder,
-      private _router: Router
+      private _router: Router,
+      private _socialAuthService: SocialAuthService
    ) {
    }
 
@@ -34,6 +36,16 @@ export class AuthSignUpComponent implements OnInit {
             password: ['Ogabek19991031', [Validators.required, Validators.minLength(6)]]
          }
       );
+      this._socialAuthService.authState.subscribe((user) => {
+         this._authService.googleAuth(user.idToken)
+            .subscribe(null, ({ error: { error } }) => {
+                  if (error === 'User has been blocked by system') {
+                     this.alert.message = `Foydalanuvchi bloklangan`;
+                  }
+                  this.showAlert = true;
+               }
+            );
+      });
    }
 
    onNameEnter($event: Event): void {

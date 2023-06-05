@@ -16,6 +16,7 @@ import { SettingsSecurityComponent } from 'app/modules/admin/pages/settings/secu
 import { SettingsPlanBillingComponent } from 'app/modules/admin/pages/settings/plan-billing/plan-billing.component';
 import { SettingsTeamComponent } from 'app/modules/admin/pages/settings/team/team.component';
 import { settingsRoutes } from 'app/modules/admin/pages/settings/settings.routing';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
     declarations: [
@@ -25,19 +26,20 @@ import { settingsRoutes } from 'app/modules/admin/pages/settings/settings.routin
         SettingsPlanBillingComponent,
         SettingsTeamComponent
     ],
-    imports     : [
-        RouterModule.forChild(settingsRoutes),
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSlideToggleModule,
-        FuseAlertModule,
-        SharedModule
-    ]
+   imports: [
+      RouterModule.forChild(settingsRoutes),
+      MatButtonModule,
+      MatFormFieldModule,
+      MatIconModule,
+      MatInputModule,
+      MatRadioModule,
+      MatSelectModule,
+      MatSidenavModule,
+      MatSlideToggleModule,
+      FuseAlertModule,
+      SharedModule,
+      NgxMaskModule.forRoot()
+   ]
 })
 export class SettingsModule
 {
