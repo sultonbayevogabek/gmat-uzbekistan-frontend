@@ -61,70 +61,94 @@
 
     <div class="mt-11 mb-10 border-t"></div>
 
-    <div class="text-xl w-full">Parolni o'zgartirish</div>
-    <div class="grid sm:grid-cols-4 gap-6 w-full mt-4">
-        <div class="sm:col-span-2">
-            <mat-form-field class="fuse-mat-no-subscript w-full">
-                <mat-label>Eski parol</mat-label>
-                <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:lock-closed'"
-                        matPrefix></mat-icon>
-                <input
-                        matInput
-                        #oldPasswordField
-                >
-                <button
-                        mat-icon-button
-                        type="button"
-                        (click)="oldPasswordField.type === 'password' ? oldPasswordField.type = 'text' : oldPasswordField.type = 'password'"
-                        matSuffix>
+    <form [formGroup]="changePasswordForm">
+        <div class="text-xl w-full">Parolni o'zgartirish</div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-4">
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Eski parol</mat-label>
                     <mat-icon
                             class="icon-size-5"
-                            *ngIf="oldPasswordField.type === 'password'"
-                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-                    <mat-icon
-                            class="icon-size-5"
-                            *ngIf="oldPasswordField.type === 'text'"
-                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
+                            [svgIcon]="'heroicons_solid:lock-closed'"
+                            matPrefix></mat-icon>
+                    <input
+                            matInput
+                            #currentPasswordField
+                            [formControlName]="'currentPassword'"
+                    >
+                    <button
+                            mat-icon-button
+                            type="button"
+                            (click)="currentPasswordField.type === 'password' ? currentPasswordField.type = 'text' : currentPasswordField.type = 'password'"
+                            matSuffix>
+                        <mat-icon
+                                class="icon-size-5"
+                                *ngIf="currentPasswordField.type === 'password'"
+                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        <mat-icon
+                                class="icon-size-5"
+                                *ngIf="currentPasswordField.type === 'text'"
+                                [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                    </button>
+                    <mat-error *ngIf="changePasswordForm.get('currentPassword').hasError('required')">
+                        Hozirgi parolni kiriting
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-        <div class="sm:col-span-2">
-            <mat-form-field class="fuse-mat-no-subscript w-full">
-                <mat-label>Yangi parol</mat-label>
-                <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:lock-closed'"
-                        matPrefix></mat-icon>
-                <input
-                        matInput
-                        #newPasswordField
-                >
-                <button
-                        mat-icon-button
-                        type="button"
-                        (click)="newPasswordField.type === 'password' ? newPasswordField.type = 'text' : newPasswordField.type = 'password'"
-                        matSuffix>
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Yangi parol</mat-label>
                     <mat-icon
                             class="icon-size-5"
-                            *ngIf="newPasswordField.type === 'password'"
-                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-                    <mat-icon
-                            class="icon-size-5"
-                            *ngIf="newPasswordField.type === 'text'"
-                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
-                </button>
-            </mat-form-field>
+                            [svgIcon]="'heroicons_solid:lock-closed'"
+                            matPrefix></mat-icon>
+                    <input
+                            matInput
+                            #newPasswordField
+                            [formControlName]="'newPassword'"
+                    >
+                    <button
+                            mat-icon-button
+                            type="button"
+                            (click)="newPasswordField.type === 'password' ? newPasswordField.type = 'text' : newPasswordField.type = 'password'"
+                            matSuffix>
+                        <mat-icon
+                                class="icon-size-5"
+                                *ngIf="newPasswordField.type === 'password'"
+                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        <mat-icon
+                                class="icon-size-5"
+                                *ngIf="newPasswordField.type === 'text'"
+                                [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                    </button>
+
+                    <mat-error *ngIf="changePasswordForm.get('newPassword').hasError('required')">
+                        Yangi parolni kiriting
+                    </mat-error>
+
+                    <mat-error *ngIf="!changePasswordForm.get('newPassword').hasError('required') && changePasswordForm.get('newPassword').hasError('minlength')">
+                        Parol uzunligi eng kamida 6 ta bo'lishi kerak
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
-    <div class="flex items-center justify-end pt-6">
-        <button
-                class="ml-4"
-                mat-flat-button
-                type="button"
-                [color]="'primary'">O'zgartirish
-        </button>
-    </div>
+        <div class="flex items-center justify-end pt-6">
+            <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="changePasswordForm.disabled"
+                    (click)="changePassword()"
+            >
+                <span *ngIf="!changePasswordForm.disabled">
+                        O'zgartirish
+                    </span>
+                <mat-progress-spinner
+                        *ngIf="changePasswordForm.disabled"
+                        [diameter]="24"
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
+    </form>
 </div>

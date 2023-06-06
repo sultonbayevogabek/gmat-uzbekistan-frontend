@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
@@ -14,8 +14,6 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 })
 
 export class AuthSignUpComponent implements OnInit {
-   @ViewChild('signUpNgForm') signUpNgForm: NgForm;
-
    alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
    signUpForm: UntypedFormGroup;
    showAlert: boolean = false;
@@ -31,9 +29,9 @@ export class AuthSignUpComponent implements OnInit {
    ngOnInit(): void {
       this._authService.signOut();
       this.signUpForm = this._formBuilder.group({
-            name: ['Alex Johnson', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-            phone: ['999639773', Validators.required],
-            password: ['Ogabek19991031', [Validators.required, Validators.minLength(6)]]
+            name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+            phone: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)]]
          }
       );
       this._socialAuthService.authState.subscribe((user) => {
