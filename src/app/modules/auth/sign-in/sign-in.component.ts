@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import {
-    SocialAuthService
+   SocialAuthService
 } from '@abacritt/angularx-social-login';
-
 
 @Component({
    selector: 'auth-sign-in',
@@ -19,8 +18,7 @@ import {
 export class AuthSignInComponent implements OnInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
 
-
-    alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
+   alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
    signInForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -35,20 +33,20 @@ export class AuthSignInComponent implements OnInit {
    ngOnInit(): void {
       this._authService.signOut();
       this.signInForm = this._formBuilder.group({
-            phone: ['999639773', Validators.required],
-            password: ['Ogabek19991031', [Validators.required, Validators.minLength(6)]]
+            phone: [ '999639773', Validators.required ],
+            password: [ 'Ogabek19991031', [ Validators.required, Validators.minLength(6) ] ]
          }
       );
-       this._socialAuthService.authState.subscribe((user) => {
-           this._authService.googleAuth(user.idToken)
-              .subscribe(null, ({ error: { error } }) => {
-                    if (error === 'User has been blocked by system') {
-                       this.alert.message = `Foydalanuvchi bloklangan`;
-                    }
-                    this.showAlert = true;
-                 }
-              );
-       });
+      this._socialAuthService.authState.subscribe((user) => {
+         this._authService.googleAuth(user.idToken)
+            .subscribe(null, ({ error: { error } }) => {
+                  if (error === 'User has been blocked by system') {
+                     this.alert.message = `Foydalanuvchi bloklangan`;
+                  }
+                  this.showAlert = true;
+               }
+            );
+      });
    }
 
    signUp(): void {
@@ -60,7 +58,7 @@ export class AuthSignInComponent implements OnInit {
 
       let { phone, password } = this.signInForm.value;
       this._authService.signIn({
-         phone: `+998${phone}`, password
+         phone: `+998${ phone }`, password
       }).subscribe(null, ({ error: { error } }) => {
             this.signInForm.enable();
             if (error === 'User has been blocked by system') {

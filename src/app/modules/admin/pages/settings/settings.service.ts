@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 
 @Injectable()
-
 export class SettingsService {
    constructor(
-      private _http: HttpClient
+      private _httClient: HttpClient,
    ) {
    }
-   changePassword(payload: { currentPassword: string; newPassword: string }): Observable<{ ok: boolean; message: string }> {
-      return this._http.post<{ ok: boolean; message: string }>(environment + 'change-password', payload)
+
+   changePassword(payload: { currentPassword: string; newPassword: string }): Observable<any> {
+     return this._httClient.post(environment.host + 'change-password', payload);
    }
 }

@@ -16,7 +16,7 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
    passwordChangeAlert: { type: FuseAlertType; message: string };
    showPasswordChangeAlert: boolean = false;
 
-   private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+   private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
    constructor(
       private _formBuilder: UntypedFormBuilder,
@@ -26,13 +26,13 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
 
    ngOnInit(): void {
       this.accountForm = this._formBuilder.group({
-         name: [''],
-         email: [''],
-         phone: ['999639773']
+         name: [ '' ],
+         email: [ '' ],
+         phone: [ '999639773' ]
       });
       this.changePasswordForm = this._formBuilder.group({
-         currentPassword: ['', [Validators.required]],
-         newPassword: ['', [Validators.required, Validators.minLength(6)]]
+         currentPassword: [ '', [ Validators.required ] ],
+         newPassword: [ '', [ Validators.required, Validators.minLength(6) ] ]
       });
    }
 
@@ -42,31 +42,30 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
       }
       this.changePasswordForm.disable();
       this._settingsService.changePassword(this.changePasswordForm.value)
-         .pipe(takeUntil(this._unsubscribeAll))
          .subscribe(() => {
             this.changePasswordForm.reset();
             this.changePasswordForm.enable();
             this.passwordChangeAlert = {
                type: 'success',
                message: `Parol muvaffaqiyatli o'zgartirildi`
-            }
+            };
             this.showPasswordChangeAlert = true;
 
-            setTimeout(() => {
-               this.showPasswordChangeAlert = false;
-            }, 10000)
-         }, ({ error: {error}}) => {
-            this.changePasswordForm.enable()
+            // setTimeout(() => {
+            //    this.showPasswordChangeAlert = false;
+            // }, 10000)
+         }, ({ error: { error } }) => {
+            this.changePasswordForm.enable();
             this.passwordChangeAlert = {
                type: 'error',
                message: `Eski parolingizni xato kiritdingiz`
-            }
+            };
             this.showPasswordChangeAlert = true;
-         })
+         });
    }
 
    ngOnDestroy() {
-      this._unsubscribeAll.next(null)
-      this._unsubscribeAll.complete()
+      this._unsubscribeAll.next(null);
+      this._unsubscribeAll.complete();
    }
 }

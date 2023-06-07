@@ -127,13 +127,14 @@
                         Yangi parolni kiriting
                     </mat-error>
 
-                    <mat-error *ngIf="!changePasswordForm.get('newPassword').hasError('required') && changePasswordForm.get('newPassword').hasError('minlength')">
+                    <mat-error
+                            *ngIf="!changePasswordForm.get('newPassword').hasError('required') && changePasswordForm.get('newPassword').hasError('minlength')">
                         Parol uzunligi eng kamida 6 ta bo'lishi kerak
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
-        <div class="flex items-center justify-end pt-6">
+        <div class="flex items-center justify-end pt-2">
             <button
                     class="ml-4"
                     mat-flat-button

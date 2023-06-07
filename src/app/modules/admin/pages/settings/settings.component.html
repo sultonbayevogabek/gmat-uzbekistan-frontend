@@ -1,8 +1,5 @@
 <div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
-
     <mat-drawer-container class="flex-auto sm:h-full">
-
-        <!-- Drawer -->
         <mat-drawer
             class="sm:w-96 dark:bg-gray-900"
             [autoFocus]="false"
@@ -78,10 +75,6 @@
                         <!-- Account -->
                         <ng-container *ngSwitchCase="'account'">
                             <settings-account></settings-account>
-                        </ng-container>
-                        <!-- Security -->
-                        <ng-container *ngSwitchCase="'security'">
-                            <settings-security></settings-security>
                         </ng-container>
                         <!-- Plan & Billing -->
                         <ng-container *ngSwitchCase="'plan-billing'">

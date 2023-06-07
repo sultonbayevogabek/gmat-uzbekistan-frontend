@@ -16,16 +16,17 @@ import { SettingsPlanBillingComponent } from 'app/modules/admin/pages/settings/p
 import { SettingsTeamComponent } from 'app/modules/admin/pages/settings/team/team.component';
 import { settingsRoutes } from 'app/modules/admin/pages/settings/settings.routing';
 import { NgxMaskModule } from 'ngx-mask';
-import { SettingsService } from './settings.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SettingsService } from './settings.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-    declarations: [
-        SettingsComponent,
-        SettingsAccountComponent,
-        SettingsPlanBillingComponent,
-        SettingsTeamComponent
-    ],
+   declarations: [
+      SettingsComponent,
+      SettingsAccountComponent,
+      SettingsPlanBillingComponent,
+      SettingsTeamComponent
+   ],
    imports: [
       RouterModule.forChild(settingsRoutes),
       MatButtonModule,
@@ -39,10 +40,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       FuseAlertModule,
       SharedModule,
       NgxMaskModule.forRoot(),
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      HttpClientModule
    ],
-   providers: [SettingsService]
+   providers: [ SettingsService ]
 })
-export class SettingsModule
-{
+export class SettingsModule {
 }
