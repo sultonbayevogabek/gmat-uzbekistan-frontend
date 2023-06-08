@@ -8,4 +8,5 @@ export interface IUser {
    avatar?: string;
    isDeleted?: boolean;
    token?: string;
+   password?: string;
 }

@@ -13,22 +13,21 @@ import { NgxMaskModule } from 'ngx-mask';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
-    declarations: [
-        AuthSignUpComponent
-    ],
-    imports: [
-        RouterModule.forChild(authSignupRoutes),
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        FuseAlertModule,
-        SharedModule,
-        NgxMaskModule.forRoot(),
-        SocialLoginModule
-    ]
+   declarations: [
+      AuthSignUpComponent
+   ],
+   imports: [
+      RouterModule.forChild(authSignupRoutes),
+      MatButtonModule,
+      MatFormFieldModule,
+      MatIconModule,
+      MatInputModule,
+      MatProgressSpinnerModule,
+      FuseAlertModule,
+      SharedModule,
+      NgxMaskModule.forRoot(),
+      SocialLoginModule
+   ]
 })
-export class AuthSignUpModule
-{
+export class AuthSignUpModule {
 }

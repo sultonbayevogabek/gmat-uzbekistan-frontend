@@ -6,7 +6,7 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { IUser } from '../../../../interfaces/user.interface';
-import {AuthService} from "../../../../core/auth/auth.service";
+import {AuthService} from "../../../../modules/auth/auth.service";
 
 @Component({
    selector: 'classy-layout',

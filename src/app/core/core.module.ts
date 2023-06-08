@@ -1,15 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { AuthModule } from 'app/core/auth/auth.module';
 import { IconsModule } from 'app/core/icons/icons.module';
 import { TranslocoCoreModule } from 'app/core/transloco/transloco.module';
-import { SettingsModule } from '../modules/admin/pages/settings/settings.module';
 
 @NgModule({
    imports: [
-      AuthModule,
       IconsModule,
-      TranslocoCoreModule,
-      SettingsModule
+      TranslocoCoreModule
    ]
 })
 export class CoreModule {

@@ -3,7 +3,7 @@ import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angul
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthService } from 'app/modules/auth/auth.service';
 import {
    SocialAuthService
 } from '@abacritt/angularx-social-login';
