@@ -19,6 +19,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
    declarations: [
@@ -42,7 +43,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       NgxMaskModule.forRoot(),
       MatProgressSpinnerModule,
       HttpClientModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatTooltipModule
    ]
 })
 
