@@ -12,12 +12,21 @@
     <ng-container fuseVerticalNavigationContentHeader>
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
-            <div class="relative w-24 h-24">
-                <img
-                    class="w-full h-full rounded-full"
-                    *ngIf="user?.avatar"
-                    [src]="user?.avatar"
-                    alt="User avatar">
+            <div class="relative w-24 h-24 rounded-full overflow-hidden">
+                <ng-container *ngIf="user?.avatar">
+                    <img
+                            *ngIf="user?.avatar?.startsWith('avatars')"
+                            class="object-cover w-full h-full"
+                            [src]="environment?.host + user?.avatar"
+                            alt=""
+                    >
+                    <img
+                            *ngIf="user?.avatar?.startsWith('http')"
+                            class="object-cover w-full h-full"
+                            [src]="user?.avatar"
+                            alt=""
+                    >
+                </ng-container>
                 <mat-icon
                     class="icon-size-24"
                     *ngIf="!user?.avatar"

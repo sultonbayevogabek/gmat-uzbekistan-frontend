@@ -6,7 +6,8 @@ import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/co
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { IUser } from '../../../../interfaces/user.interface';
-import {AuthService} from "../../../../modules/auth/auth.service";
+import { AuthService } from '../../../../modules/auth/auth.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
    selector: 'classy-layout',
@@ -34,17 +35,17 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
    }
 
    ngOnInit(): void {
+      this._authService.user$
+         .pipe(takeUntil(this._unsubscribeAll))
+         .subscribe(user => {
+            this.user = user;
+         })
+
       this._navigationService.navigation$
          .pipe(takeUntil(this._unsubscribeAll))
          .subscribe((navigation: Navigation) => {
             this.navigation = navigation;
          });
-
-      this._authService.userObservable$
-          .pipe(takeUntil(this._unsubscribeAll))
-          .subscribe(user => {
-             this.user = user;
-          })
 
       // Subscribe to media changes
       this._fuseMediaWatcherService.onMediaChange$
@@ -58,16 +59,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
       this._unsubscribeAll.next(null);
       this._unsubscribeAll.complete();
    }
-
-   // -----------------------------------------------------------------------------------------------------
-   // @ Public methods
-   // -----------------------------------------------------------------------------------------------------
-
-   /**
-    * Toggle navigation
-    *
-    * @param name
-    */
    toggleNavigation(name: string): void {
       // Get the navigation
       const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
@@ -77,4 +68,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
          navigation.toggle();
       }
    }
+
+   protected readonly environment = environment;
 }

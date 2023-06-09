@@ -12,11 +12,15 @@ export class SettingsService {
    ) {
    }
 
-   changePassword(payload: { currentPassword?: string; newPassword: string }): Observable<any> {
-     return this._httClient.post(environment.host + 'change-password', payload);
+   changePassword(payload: { currentPassword?: string; newPassword: string }): Observable<{ ok: true; message: string }> {
+     return this._httClient.post<{ ok: true; message: string }>(environment.host + 'change-password', payload);
    }
 
-   updateCredentials(payload: { name: string; phone: string }): Observable<any> {
-      return this._httClient.post(environment.host + 'update-credentials', payload);
+   updateCredentials(payload: { name: string; phone: string }): Observable<{ ok: true; message: string }> {
+      return this._httClient.post<{ ok: true; message: string }>(environment.host + 'update-credentials', payload);
+   }
+
+   uploadAvatar(payload: FormData): Observable<{ ok: true; message: string }> {
+      return this._httClient.post<{ ok: true; message: string }>(environment.host + 'upload-avatar', payload);
    }
 }

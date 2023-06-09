@@ -20,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
    declarations: [
@@ -28,24 +29,25 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       SettingsPlanBillingComponent,
       SettingsTeamComponent
    ],
-   imports: [
-      RouterModule.forChild(settingsRoutes),
-      MatButtonModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatRadioModule,
-      MatSelectModule,
-      MatSidenavModule,
-      MatSlideToggleModule,
-      FuseAlertModule,
-      SharedModule,
-      NgxMaskModule.forRoot(),
-      MatProgressSpinnerModule,
-      HttpClientModule,
-      MatSnackBarModule,
-      MatTooltipModule
-   ]
+    imports: [
+        RouterModule.forChild(settingsRoutes),
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSlideToggleModule,
+        FuseAlertModule,
+        SharedModule,
+        NgxMaskModule.forRoot(),
+        MatProgressSpinnerModule,
+        HttpClientModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MatRippleModule
+    ]
 })
 
 export class SettingsModule {

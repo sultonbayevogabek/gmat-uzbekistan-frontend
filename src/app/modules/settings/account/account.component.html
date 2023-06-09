@@ -1,6 +1,45 @@
 <div class="w-full max-w-3xl" *ngIf="user">
+    <div class="flex items-start gap-3 lg:gap-5">
+        <div class="relative flex items-center justify-center w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden ring-4 ring-bg-card shrink-0 mb-5">
+            <label class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 opacity-0 hover:opacity-100 cursor-pointer" matRipple>
+                <div>
+                    <input
+                            id="avatar-file-input"
+                            class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
+                            type="file"
+                            [multiple]="false"
+                            [accept]="'image/jpeg, image/png, image/jpg'"
+                            (change)="uploadAvatar(avatarFileInput.files)"
+                            #avatarFileInput>
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                </div>
+            </label>
+            <ng-container *ngIf="user?.avatar">
+                <img
+                        *ngIf="user?.avatar?.startsWith('avatars')"
+                        class="object-cover w-full h-full"
+                        [src]="environment?.host + user?.avatar">
+                <img
+                        *ngIf="user?.avatar?.startsWith('http')"
+                        class="object-cover w-full h-full"
+                        [src]="user?.avatar">
+            </ng-container>
+            <div
+                    class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                    *ngIf="!user.avatar">
+                {{ user.name.charAt(0) }}
+            </div>
+        </div>
+
+        <div class="text-xl lg:text-3xl font-bold tracking-tight leading-none pt-3">
+            {{ user?.name }}
+        </div>
+    </div>
+
+    <div class="text-xl w-full">Shaxsiy ma'lumotlar</div>
+
     <form [formGroup]="accountForm">
-        <div class="text-xl w-full">Shaxsiy ma'lumotlar</div>
+
         <div class="grid sm:grid-cols-4 gap-x-6 gap-y-2 w-full mt-4">
             <div class="sm:col-span-2">
                 <mat-form-field class="w-full">
@@ -54,7 +93,8 @@
             </div>
 
             <div class="sm:col-span-2" *ngIf="user?.email">
-                <mat-form-field class="fuse-mat-no-subscript w-full" matTooltip="Elektron pochtani o'zgartirib bo'lmaydi">
+                <mat-form-field class="fuse-mat-no-subscript w-full"
+                                matTooltip="Elektron pochtani o'zgartirib bo'lmaydi">
                     <mat-label>Elektron pochta</mat-label>
                     <mat-icon
                             class="icon-size-5"
