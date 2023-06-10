@@ -44,6 +44,7 @@ export interface FuseNavigationItem
     };
     children?: FuseNavigationItem[];
     meta?: any;
+    roles?: ('user' | 'premium-user' | 'admin')[]
 }
 
 export type FuseVerticalNavigationAppearance =

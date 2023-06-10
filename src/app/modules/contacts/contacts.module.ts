@@ -21,14 +21,13 @@ import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
 import { contactsRoutes } from 'app/modules/contacts/contacts.routing';
 import { ContactsComponent } from 'app/modules/contacts/contacts.component';
-import { ContactsDetailsComponent } from 'app/modules/contacts/details/details.component';
 import { ContactsListComponent } from 'app/modules/contacts/list/list.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
    declarations: [
       ContactsComponent,
-      ContactsListComponent,
-      ContactsDetailsComponent
+      ContactsListComponent
    ],
    imports: [
       RouterModule.forChild(contactsRoutes),
@@ -49,7 +48,8 @@ import { ContactsListComponent } from 'app/modules/contacts/list/list.component'
       MatTableModule,
       MatTooltipModule,
       FuseFindByKeyPipeModule,
-      SharedModule
+      SharedModule,
+      MatSnackBarModule
    ],
    providers: [
       {

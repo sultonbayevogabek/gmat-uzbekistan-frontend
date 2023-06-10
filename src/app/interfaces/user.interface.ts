@@ -1,5 +1,6 @@
 export interface IUser {
    id?: string;
+   createdAt?: string;
    googleId?: string;
    name?: string;
    phone?: string;
@@ -7,6 +8,5 @@ export interface IUser {
    role?: 'user' | 'premium-user' | 'admin';
    avatar?: string;
    isDeleted?: boolean;
-   token?: string;
    password?: string;
 }

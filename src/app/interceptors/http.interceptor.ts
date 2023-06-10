@@ -16,13 +16,6 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
       private _authService: AuthService
    ) {
    }
-
-   /**
-    * Intercept
-    *
-    * @param req
-    * @param next
-    */
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       let newReq = req.clone();
 

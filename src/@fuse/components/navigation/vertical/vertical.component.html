@@ -35,7 +35,7 @@
                 </ng-container>
 
                 <!-- Basic -->
-                <ng-container *ngIf="item.type === 'basic'">
+                <ng-container *ngIf="item.type === 'basic' && item?.roles.includes(user?.role)">
                     <fuse-vertical-navigation-basic-item
                         [item]="item"
                         [name]="name"></fuse-vertical-navigation-basic-item>

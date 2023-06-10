@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
 import { IUser } from '../../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
@@ -18,20 +18,16 @@ export class AuthService {
    ) {
    }
 
-   private _setToken(response: { ok: boolean; user: IUser; token: string } | null) {
-      if (response) {
-         localStorage.setItem('token', response?.token);
-      } else {
-         localStorage.clear();
-      }
-   }
-
    isAuthenticated(): boolean {
-      return !!this.token;
+      return this._authenticated;
    }
 
    get token(): string {
       return localStorage.getItem('token');
+   }
+
+   set token(value) {
+      localStorage.setItem('token', value)
    }
 
    set authenticated(value: boolean) {
@@ -46,66 +42,50 @@ export class AuthService {
       return this._user.asObservable();
    }
 
-   getUser(): Observable<boolean> {
-      if (!this.token) {
-         return of(false);
-      }
+   getUser(): Observable<{ user: IUser }> {
       return this._httpClient.post(environment.host + 'get-user', {})
          .pipe(
-            switchMap((response: { ok: boolean; user: IUser }) => {
-               this.authenticated = true;
+            tap((response: { ok: boolean; user: IUser }) => {
                this._user.next(response.user);
-               return of(true);
-            }),
-            catchError(() => {
-               this.authenticated = false;
-               this._router.navigate([ 'sign-in' ]).then();
-               return of(false);
+               return response.user
             })
          );
    }
 
    signOut() {
-      this._setToken(null);
+      localStorage.clear();
+      this._router.navigate(['sign-in']).then();
    }
 
 
-   signUp(credentials: IUser): Observable<{ ok: boolean; user: IUser; token: string }> {
-      return this._httpClient.post<{
-         ok: boolean;
-         user: IUser;
-         token: string
-      }>(environment.host + 'sign-up', credentials)
+   signUp(credentials: IUser): Observable<{ ok: boolean; token: string }> {
+      return this._httpClient.post<{ ok: boolean; token: string }>(environment.host + 'sign-up', credentials)
          .pipe(
-            switchMap((response: { ok: boolean; user: IUser; token: string }) => {
+            switchMap((response: { ok: boolean; token: string }) => {
                this.authenticated = true;
+               this.token = response?.token;
                this._router.navigate([ 'lessons' ]).then();
                return of(response);
             })
          );
    }
 
-   signIn(credentials: { phone: string; password: string }): Observable<{ ok: boolean; user: IUser; token: string }> {
+   signIn(credentials: { phone: string; password: string }): Observable<{ ok: boolean; token: string }> {
       return this._httpClient.post(environment.host + 'sign-in', credentials).pipe(
-         switchMap((response: { ok: boolean; user: IUser; token: string }) => {
+         switchMap((response: { ok: boolean; token: string }) => {
             this.authenticated = true;
-            this._setToken(response);
+            this.token = response?.token;
             this._router.navigate([ 'lessons' ]).then();
             return of(response);
          })
       );
    }
 
-   // signIn(credentials: { phone: string; password: string }): Observable<{ ok: boolean; user: IUser; token: string }> {
-   //    return this._httpClient.post(environment.host + 'sign-in', credentials).pipe(
-   //       tap(this._setToken)
-   //    );
-   // }
-
    googleAuth(idToken: string) {
       return this._httpClient.post(environment.host + 'google-auth', { idToken }).pipe(
-         switchMap((response: { ok: boolean; user: IUser; token: string }) => {
-            this._authenticated = true;
+         switchMap((response: { ok: boolean; token: string }) => {
+            this.authenticated = true;
+            this.token = response?.token;
             this._router.navigate([ 'lessons' ]).then();
             return of(response);
          })

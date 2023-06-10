@@ -9,6 +9,8 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { FuseScrollbarDirective } from '@fuse/directives/scrollbar/scrollbar.directive';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { AuthService } from '../../../../app/modules/auth/auth.service';
+import { IUser } from '../../../../app/interfaces/user.interface';
 
 @Component({
     selector       : 'fuse-vertical-navigation',
@@ -42,6 +44,7 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
     @Output() readonly positionChanged: EventEmitter<FuseVerticalNavigationPosition> = new EventEmitter<FuseVerticalNavigationPosition>();
     @ViewChild('navigationContent') private _navigationContentEl: ElementRef;
 
+    user: IUser;
     activeAsideItemId: string | null = null;
     onCollapsableItemCollapsed: ReplaySubject<FuseNavigationItem> = new ReplaySubject<FuseNavigationItem>(1);
     onCollapsableItemExpanded: ReplaySubject<FuseNavigationItem> = new ReplaySubject<FuseNavigationItem>(1);
@@ -69,7 +72,8 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
         private _router: Router,
         private _scrollStrategyOptions: ScrollStrategyOptions,
         private _fuseNavigationService: FuseNavigationService,
-        private _fuseUtilsService: FuseUtilsService
+        private _fuseUtilsService: FuseUtilsService,
+        private _authService: AuthService
     )
     {
         this._handleAsideOverlayClick = (): void => {
@@ -78,6 +82,10 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
         this._handleOverlayClick = (): void => {
             this.close();
         };
+
+        this._authService.user$.subscribe((user) => {
+            this.user = user;
+        })
     }
 
     // -----------------------------------------------------------------------------------------------------
