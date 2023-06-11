@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { AuthGuard } from 'app/guards/auth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { AdminGuard } from './guards/admin.guard';
 
 export const appRoutes: Route[] = [
    { path: '', pathMatch: 'full', redirectTo: 'lessons' },
@@ -41,6 +42,7 @@ export const appRoutes: Route[] = [
             loadChildren: () => import('app/modules/chat/chat.module').then(m => m.ChatModule)
          },
          {
+            canActivate: [ AdminGuard ],
             path: 'users',
             loadChildren: () => import('app/modules/contacts/contacts.module').then(m => m.ContactsModule)
          },
@@ -56,7 +58,7 @@ export const appRoutes: Route[] = [
             path: 'settings',
             loadChildren: () => import('app/modules/settings/settings.module').then(m => m.SettingsModule)
          },
-         { path: '**', redirectTo: '404-not-found' }
+         { path: '**', redirectTo: '404' }
       ]
    }
 ];

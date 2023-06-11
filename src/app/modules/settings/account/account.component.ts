@@ -107,6 +107,7 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
          .subscribe(() => {
             this._authService.getUser();
             this.accountForm.enable();
+            this._changeDetectorRef.markForCheck();
             this._snackbar.open(`Ma'lumotlaringiz muvaffaqiyatli o'zgartirildi`, 'OK', {
                duration: 5000
             });
@@ -146,7 +147,7 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
       this.setPasswordForm.disable();
       this._settingsService.changePassword(this.setPasswordForm.value)
          .subscribe(() => {
-            this._authService.getUser();
+            this._authService.getUser().subscribe();
             this._snackbar.open(`Parol muvaffaqiyatli o'zgartirildi`, 'OK', {
                duration: 5000
             });

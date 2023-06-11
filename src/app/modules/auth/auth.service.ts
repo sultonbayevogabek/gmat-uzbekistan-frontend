@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
    providedIn: 'root'
 })
 export class AuthService {
+   currentUser: IUser;
    private _user: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(null);
    private _authenticated: boolean = false;
 
@@ -46,6 +47,7 @@ export class AuthService {
       return this._httpClient.post(environment.host + 'get-user', {})
          .pipe(
             tap((response: { ok: boolean; user: IUser }) => {
+               this.currentUser = response.user;
                this._user.next(response.user);
                return response.user
             })

@@ -216,7 +216,7 @@
                     [disabled]="changePasswordForm.disabled"
                     (click)="changePassword()"
             >
-                <span *ngIf="!changePasswordForm.disabled">
+                <span *ngIf="changePasswordForm.enabled">
                         O'zgartirish
                     </span>
                 <mat-progress-spinner
