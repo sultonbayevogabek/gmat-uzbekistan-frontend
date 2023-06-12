@@ -9,4 +9,14 @@ export interface IUser {
    avatar?: string;
    isDeleted?: boolean;
    password?: string;
+   payments?: IPayment[]
+}
+
+export interface IPayment {
+   id: string;
+   paymentUserId: string;
+   paymentScreenshot: string;
+   seenTime: string;
+   createdAt: string;
+   updatedAt: string;
 }

@@ -5,6 +5,8 @@ import { IUser } from '../../../interfaces/user.interface';
 import { environment } from 'environments/environment';
 import { Confirmable } from '../../../decorators/confirmation.decorator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ScreenshotModalComponent } from '../screenshot-modal/screenshot-modal.component';
 
 @Component({
    selector: 'contacts-list',
@@ -24,7 +26,8 @@ export class ContactsListComponent implements OnInit, OnDestroy {
    constructor(
       private _usersService: ContactsService,
       private _changeDetectorRef: ChangeDetectorRef,
-      private _snackbar: MatSnackBar
+      private _snackbar: MatSnackBar,
+      private _matDialog: MatDialog
    ) {
    }
 
@@ -70,6 +73,15 @@ export class ContactsListComponent implements OnInit, OnDestroy {
             })
             this.getUserList();
          });
+   }
+
+   openScreenshot(paymentScreenshot: string) {
+      this._matDialog.open(ScreenshotModalComponent, {
+         data: {
+            paymentScreenshot
+         },
+         width: '400px'
+      })
    }
 
    ngOnDestroy() {

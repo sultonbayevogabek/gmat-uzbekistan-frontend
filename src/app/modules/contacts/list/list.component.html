@@ -61,12 +61,16 @@
                         </div>
 
                         <div class="flex gap-2" *ngIf="user?.role !== 'admin'">
-                            <button mat-icon-button color="warn" (click)="deleteUser(user?.id)">
-                                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                            <button mat-icon-button color="accent" *ngIf="user?.payments?.length" (click)="openScreenshot(user?.payments[0]?.paymentScreenshot)">
+                                <mat-icon *ngIf="user?.payments[0].seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                                <mat-icon *ngIf="!user?.payments[0].seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
                             </button>
                             <button mat-icon-button color="primary" (click)="changeRole(user?.id)">
                                 <mat-icon *ngIf="user?.role === 'user'" [svgIcon]="'heroicons_outline:star'"></mat-icon>
                                 <mat-icon class="icon-size-7" *ngIf="user?.role === 'premium-user'" [svgIcon]="'heroicons_solid:star'"></mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="deleteUser(user?.id)">
+                                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                             </button>
                         </div>
                     </div>

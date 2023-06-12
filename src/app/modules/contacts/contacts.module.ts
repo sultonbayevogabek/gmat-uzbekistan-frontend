@@ -23,11 +23,14 @@ import { contactsRoutes } from 'app/modules/contacts/contacts.routing';
 import { ContactsComponent } from 'app/modules/contacts/contacts.component';
 import { ContactsListComponent } from 'app/modules/contacts/list/list.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ScreenshotModalComponent } from './screenshot-modal/screenshot-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
    declarations: [
       ContactsComponent,
-      ContactsListComponent
+      ContactsListComponent,
+      ScreenshotModalComponent
    ],
    imports: [
       RouterModule.forChild(contactsRoutes),
@@ -49,7 +52,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       MatTooltipModule,
       FuseFindByKeyPipeModule,
       SharedModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatDialogModule
    ],
    providers: [
       {

@@ -15,6 +15,7 @@ import { Confirmable } from '../../../decorators/confirmation.decorator';
 export class SettingsPlanBillingComponent implements OnInit {
    environment = environment;
    screenshots: IScreenshot[] = [];
+   loaded = false;
 
    constructor(
       private _snackbar: MatSnackBar,
@@ -50,7 +51,12 @@ export class SettingsPlanBillingComponent implements OnInit {
 
       this._settingsService.uploadScreenshot(formData)
          .subscribe(() => {
+            this.getScreenshots();
             this._snackbar.open(`Skrinshot muvaffaqiyatli yuklandi`, 'OK', {
+               duration: 5000
+            });
+         }, () => {
+            this._snackbar.open(`Bittadan ortiq skrinshot yuklash mumkin emas`, 'OK', {
                duration: 5000
             });
          });
@@ -58,6 +64,7 @@ export class SettingsPlanBillingComponent implements OnInit {
 
    getScreenshots() {
       this._settingsService.getScreenshots().subscribe((res) => {
+         this.loaded = true;
          this.screenshots = res?.screenshots || [];
          this._changeDetectorRef.markForCheck();
       })
