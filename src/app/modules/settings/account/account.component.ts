@@ -68,8 +68,6 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
             });
 
             this.accountForm.updateValueAndValidity();
-
-            this._changeDetectorRef.markForCheck();
          });
    }
 
@@ -107,7 +105,6 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
          .subscribe(() => {
             this._authService.getUser();
             this.accountForm.enable();
-            this._changeDetectorRef.markForCheck();
             this._snackbar.open(`Ma'lumotlaringiz muvaffaqiyatli o'zgartirildi`, 'OK', {
                duration: 5000
             });

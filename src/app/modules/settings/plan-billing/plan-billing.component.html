@@ -1,163 +1,93 @@
 <div class="w-full max-w-3xl">
 
-    <!-- Form -->
-    <form [formGroup]="planBillingForm">
-
-        <!-- Section -->
-        <div class="w-full">
-            <div class="text-xl">Change your plan</div>
-            <div class="text-secondary">Upgrade or downgrade your current plan.</div>
+    <div class="w-full">
+        <div class="text-xl mb-3">Kursga to'lov qilish</div>
+        <div class="text-secondary mb-3">Ixtiyoriy to'lov tizimlari (Uzum, Payme, Click va hokazo) orqali
+            quyida rasmi keltirilgan kartaga 400 000 so'm miqdordagi o'tkazmani amalga oshirasiz.
         </div>
-        <div class="grid sm:grid-cols-3 gap-6 w-full mt-8">
-            <!-- Plan -->
-            <div class="sm:col-span-3">
-                <fuse-alert
-                    [appearance]="'outline'"
-                    [type]="'info'">
-                    Changing the plan will take effect immediately. You will be charged for the rest of the current month.
-                </fuse-alert>
-            </div>
-            <mat-radio-group
-                class="invisible absolute w-0 h-0 pointer-events-none"
-                [formControlName]="'plan'"
-                #planRadioGroup="matRadioGroup">
-                <ng-container *ngFor="let plan of plans; trackBy: trackByFn">
-                    <mat-radio-button [value]="plan.value"></mat-radio-button>
-                </ng-container>
-            </mat-radio-group>
-            <ng-container *ngFor="let plan of plans; trackBy: trackByFn">
-                <div
-                    class="relative flex flex-col items-start justify-start p-6 rounded-md shadow cursor-pointer bg-card"
-                    [ngClass]="{'ring ring-inset ring-primary': planRadioGroup.value === plan.value}"
-                    (click)="planRadioGroup.value = plan.value">
-                    <ng-container *ngIf="planRadioGroup.value === plan.value">
-                        <mat-icon
-                            class="absolute top-0 right-0 mt-3 mr-3 icon-size-7 text-primary"
-                            [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
-                    </ng-container>
-                    <div class="font-medium">{{plan.label}}</div>
-                    <div class="mt-1 whitespace-normal text-secondary">{{plan.details}}</div>
-                    <div class="flex-auto"></div>
-                    <div class="mt-8 text-lg">
-                        <span>{{plan.price | currency:'USD':'symbol':'1.0'}}</span>
-                        <span class="text-secondary"> / month</span>
-                    </div>
+    </div>
+
+    <div class="w-96 h-56 m-auto mb-5 bg-red-100 rounded-xl relative text-white">
+
+        <img class="relative object-cover w-full h-full rounded-xl" src="https://i.imgur.com/kGkSg1v.png">
+
+        <div class="w-full px-8 absolute top-8">
+            <div class="flex justify-between">
+                <div class="">
+                    <p class="font-light uppercase text-[10px]">
+                        Karta egasi
+                    </p>
+                    <p class="font-medium tracking-widest uppercase text-[16px]">
+                        Xodiyev Lutfulloxon
+                    </p>
                 </div>
-            </ng-container>
-        </div>
+            </div>
+            <div class="pt-3">
+                <p class="font-light uppercase text-[10px]">
+                    Karta raqami
+                </p>
+                <p class="font-medium tracking-more-wider text-[18px]">
+                    8600 0210 4233 3040
+                </p>
+            </div>
 
-        <!-- Divider -->
-        <div class="mt-12 mb-10 border-t"></div>
-
-        <!-- Section -->
-        <div class="w-full">
-            <div class="text-xl">Payment Details</div>
-            <div class="text-secondary">Update your billing information. Make sure to set your location correctly as it could affect your tax rates.</div>
-        </div>
-        <div class="grid grid-cols-4 gap-6 w-full mt-8">
-            <!-- Card holder -->
-            <div class="col-span-4">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Card holder</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:user'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'cardHolder'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Card number -->
-            <div class="col-span-4 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Card number</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:credit-card'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'cardNumber'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Card expiration -->
-            <div class="col-span-2 sm:col-span-1">
-                <mat-form-field
-                    class="fuse-mat-no-subscript w-full"
-                    [floatLabel]="'always'">
-                    <mat-label>Expiration date</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:calendar'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'cardExpiration'"
-                        [placeholder]="'MM / YY'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Card CVC -->
-            <div class="col-span-2 sm:col-span-1">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>CVC / CVC2</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:lock-closed'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'cardCVC'"
-                        matInput>
-                </mat-form-field>
-            </div>
-            <!-- Country -->
-            <div class="col-span-4 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Country</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:location-marker'"
-                        matPrefix></mat-icon>
-                    <mat-select [formControlName]="'country'">
-                        <mat-option [value]="'usa'">United States</mat-option>
-                        <mat-option [value]="'canada'">Canada</mat-option>
-                        <mat-option [value]="'mexico'">Mexico</mat-option>
-                        <mat-option [value]="'france'">France</mat-option>
-                        <mat-option [value]="'germany'">Germany</mat-option>
-                        <mat-option [value]="'italy'">Italy</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <!-- ZIP -->
-            <div class="col-span-4 sm:col-span-2">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>ZIP / Postal code</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:hashtag'"
-                        matPrefix></mat-icon>
-                    <input matInput>
-                </mat-form-field>
+            <div class="flex justify-end">
+                <img class="w-auto h-18" src="https://kapitalbank.uz/upload/media/icons/cards/system-uzcard_w.png"
+                     alt="">
             </div>
         </div>
+    </div>
 
-        <!-- Divider -->
-        <div class="mt-11 mb-10 border-t"></div>
+    <div class="text-secondary mb-10">
+        Kartaga o'tkazma amalga oshirilganidan keyin, to'lov haqidagi kvitansiyani skrinshot qilasiz va
+        quyidagi jo'natish tugmasi orqali
+        rasmni jo'natasiz. Tizim admini to'lov haqidagi rasmni ko'rib, to'lovni tasdiqlasa sizga saytdan to'liq
+        foydalanish uchun huquq beradi.
+    </div>
 
-        <!-- Actions -->
-        <div class="flex items-center justify-end">
-            <button
-                mat-stroked-button
-                type="button">
-                Cancel
-            </button>
-            <button
-                class="ml-4"
-                mat-flat-button
-                type="button"
-                [color]="'primary'">Save
-            </button>
+    <div class="text-xl mb-3">Siz yuklagan skrinshotlar</div>
+
+    <div class="grid grid-cols-3 mb-5" *ngIf="screenshots.length">
+        <div class="relative rounded overflow-hidden" *ngFor="let s of screenshots">
+            <img class="w-full" [src]="environment.host + s.paymentScreenshot" alt="">
+
+            <div
+                    class="absolute inset-0 grid place-items-center bg-black bg-opacity-25 opacity-0 hover:opacity-100 cursor-pointer"
+                    (click)="deleteScreenshot(s?.id)"
+                    matRipple
+                    matTooltip="Skrinshotni o'chirish"
+            >
+                <mat-icon class="icon-size-7 text-white" svgIcon="heroicons_solid:trash"></mat-icon>
+            </div>
         </div>
-    </form>
+    </div>
 
+    <label class="flex items-center justify-center w-full py-3 rounded-full bg-white cursor-pointer" matRipple>
+        <mat-icon svgIcon="heroicons_outline:upload-img"></mat-icon>
+        <span class="ml-2">To'lov haqidagi skrinshotni jo'natish</span>
+        <input
+                class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
+                type="file"
+                [multiple]="false"
+                [accept]="'image/jpeg, image/png, image/jpg'"
+                (change)="uploadScreenshot(screenshotUploadInput.files)"
+                #screenshotUploadInput>
+    </label>
+
+    <!--    <div class="flex flex-col w-40 h-40 p-4 shadow rounded-2xl cursor-pointer bg-card">-->
+    <!--        <div class="aspect-[9/6]">-->
+    <!--            <div class="flex items-center justify-center h-full">-->
+    <!--                <div class="relative">-->
+    <!--                    <mat-icon class="notranslate icon-size-14 text-hint opacity-50 mat-icon-no-color" svgIcon="heroicons_solid:document"></mat-icon>-->
+    <!--                    <div class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-amber-600">-->
+    <!--                        JPG-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="flex flex-col flex-auto justify-center text-center text-sm font-medium">-->
+    <!--            <div class="mat-mdc-tooltip-trigger truncate">-->
+    <!--                Scanned image 20201012-1-->
+    <!--            </div></div>-->
+    <!--    </div>-->
 </div>
