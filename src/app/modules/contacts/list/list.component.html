@@ -61,9 +61,15 @@
                         </div>
 
                         <div class="flex gap-2" *ngIf="user?.role !== 'admin'">
-                            <button mat-icon-button color="accent" *ngIf="user?.payments?.length" (click)="openScreenshot(user?.payments[0]?.paymentScreenshot)">
-                                <mat-icon *ngIf="user?.payments[0].seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                            <button
+                                    mat-icon-button
+                                    color="accent"
+                                    [matTooltip]="user?.payments[0].seenTime ? 'Ko\'rilgan vaqti: ' + (user?.payments[0].seenTime| date: 'dd.MM.yyyy hh:mm') : 'Ko\'rilmagan'"
+                                    *ngIf="user?.payments?.length"
+                                    (click)="openScreenshot(user?.payments[0])"
+                            >
                                 <mat-icon *ngIf="!user?.payments[0].seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
+                                <mat-icon *ngIf="user?.payments[0].seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
                             </button>
                             <button mat-icon-button color="primary" (click)="changeRole(user?.id)">
                                 <mat-icon *ngIf="user?.role === 'user'" [svgIcon]="'heroicons_outline:star'"></mat-icon>

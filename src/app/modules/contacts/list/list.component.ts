@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ContactsService } from '../contacts.service';
-import { IUser } from '../../../interfaces/user.interface';
+import { IPayment, IUser } from '../../../interfaces/user.interface';
 import { environment } from 'environments/environment';
 import { Confirmable } from '../../../decorators/confirmation.decorator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -75,10 +75,14 @@ export class ContactsListComponent implements OnInit, OnDestroy {
          });
    }
 
-   openScreenshot(paymentScreenshot: string) {
+   openScreenshot(screenshot: IPayment) {
+      if (!screenshot?.seenTime) {
+         screenshot.seenTime = new Date().toDateString();
+         this._usersService.setScreenshotAsSeen(screenshot.id);
+      }
       this._matDialog.open(ScreenshotModalComponent, {
          data: {
-            paymentScreenshot
+            paymentScreenshot: screenshot.paymentScreenshot
          },
          width: '400px'
       })

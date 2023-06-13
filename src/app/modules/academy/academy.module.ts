@@ -16,6 +16,8 @@ import { AcademyComponent } from 'app/modules/academy/academy.component';
 import { AcademyDetailsComponent } from 'app/modules/academy/details/details.component';
 import { AcademyListComponent } from 'app/modules/academy/list/list.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
    declarations: [
@@ -36,7 +38,9 @@ import { MatTabsModule } from '@angular/material/tabs';
       MatTooltipModule,
       FuseFindByKeyPipeModule,
       SharedModule,
-      MatTabsModule
+      MatTabsModule,
+      NgxYoutubePlayerModule,
+      MatRippleModule
    ]
 })
 

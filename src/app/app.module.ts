@@ -14,7 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { HttpHandlerInterceptor } from './interceptors/http.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {SocialLoginModule, GoogleLoginProvider, SocialAuthServiceConfig} from "@abacritt/angularx-social-login";
+import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -42,7 +42,7 @@ const routerConfig: ExtraOptions = {
         LayoutModule,
 
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({}),
+        MarkdownModule.forRoot({})
     ],
     bootstrap   : [
         AppComponent

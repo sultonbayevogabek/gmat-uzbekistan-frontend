@@ -72,7 +72,8 @@ export class SettingsPlanBillingComponent implements OnInit {
 
    @Confirmable({
       title: `Skrinshotni o'chirish`,
-      message: `Skrinshotni o'chirishni tasdiqlaysizmi?`
+      message: `Skrinshotni o'chirishni tasdiqlaysizmi?`,
+      dismissible: true
    })
    deleteScreenshot(id: string) {
       this._settingsService.deleteScreenshot(id).subscribe(() => {

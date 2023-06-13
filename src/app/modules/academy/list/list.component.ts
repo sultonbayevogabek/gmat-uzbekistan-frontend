@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   ChangeDetectorRef,
+   Component,
+   OnDestroy,
+   OnInit,
+   ViewEncapsulation
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -7,150 +14,149 @@ import { AcademyService } from 'app/modules/academy/academy.service';
 import { Category, Course } from 'app/modules/academy/academy.types';
 
 @Component({
-    selector       : 'academy-list',
-    templateUrl    : './list.component.html',
-    encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+   selector: 'academy-list',
+   templateUrl: './list.component.html',
+   encapsulation: ViewEncapsulation.None,
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcademyListComponent implements OnInit, OnDestroy
-{
-    categories: Category[];
-    courses: Course[];
-    filteredCourses: Course[];
-    filters: {
-        categorySlug$: BehaviorSubject<string>;
-        query$: BehaviorSubject<string>;
-        hideCompleted$: BehaviorSubject<boolean>;
-    } = {
-        categorySlug$ : new BehaviorSubject('all'),
-        query$        : new BehaviorSubject(''),
-        hideCompleted$: new BehaviorSubject(false)
-    };
 
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+export class AcademyListComponent implements OnInit, OnDestroy {
+   categories: Category[];
+   courses: Course[];
+   filteredCourses: Course[];
+   filters: {
+      categorySlug$: BehaviorSubject<string>;
+      query$: BehaviorSubject<string>;
+      hideCompleted$: BehaviorSubject<boolean>;
+   } = {
+      categorySlug$: new BehaviorSubject('all'),
+      query$: new BehaviorSubject(''),
+      hideCompleted$: new BehaviorSubject(false)
+   };
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _academyService: AcademyService
-    )
-    {
-    }
+   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+   /**
+    * Constructor
+    */
+   constructor(
+      private _activatedRoute: ActivatedRoute,
+      private _changeDetectorRef: ChangeDetectorRef,
+      private _router: Router,
+      private _academyService: AcademyService
+   ) {
+   }
 
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
-        // Get the categories
-        this._academyService.categories$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((categories: Category[]) => {
-                this.categories = categories;
+   // -----------------------------------------------------------------------------------------------------
+   // @ Lifecycle hooks
+   // -----------------------------------------------------------------------------------------------------
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+   /**
+    * On init
+    */
+   ngOnInit(): void {
+      // Get the categories
+      this._academyService.categories$
+         .pipe(takeUntil(this._unsubscribeAll))
+         .subscribe((categories: Category[]) => {
+            this.categories = categories;
 
-        // Get the courses
-        this._academyService.courses$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((courses: Course[]) => {
-                this.courses = this.filteredCourses = courses;
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+         });
 
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+      // Get the courses
+      this._academyService.courses$
+         .pipe(takeUntil(this._unsubscribeAll))
+         .subscribe((courses: Course[]) => {
+            this.courses = this.filteredCourses = courses;
 
-        // Filter the courses
-        combineLatest([this.filters.categorySlug$, this.filters.query$, this.filters.hideCompleted$])
-            .subscribe(([categorySlug, query, hideCompleted]) => {
+            // Mark for check
+            this._changeDetectorRef.markForCheck();
+         });
 
-                // Reset the filtered courses
-                this.filteredCourses = this.courses;
+      // Filter the courses
+      combineLatest([ this.filters.categorySlug$, this.filters.query$, this.filters.hideCompleted$ ])
+         .subscribe(([ categorySlug, query, hideCompleted ]) => {
 
-                // Filter by category
-                if ( categorySlug !== 'all' )
-                {
-                    this.filteredCourses = this.filteredCourses.filter(course => course.category === categorySlug);
-                }
+            // Reset the filtered courses
+            this.filteredCourses = this.courses;
 
-                // Filter by search query
-                if ( query !== '' )
-                {
-                    this.filteredCourses = this.filteredCourses.filter(course => course.title.toLowerCase().includes(query.toLowerCase())
-                        || course.description.toLowerCase().includes(query.toLowerCase())
-                        || course.category.toLowerCase().includes(query.toLowerCase()));
-                }
+            // Filter by category
+            if (categorySlug !== 'all') {
+               this.filteredCourses = this.filteredCourses.filter(course => course.category === categorySlug);
+            }
 
-                // Filter by completed
-                if ( hideCompleted )
-                {
-                    this.filteredCourses = this.filteredCourses.filter(course => course.progress.completed === 0);
-                }
-            });
-    }
+            // Filter by search query
+            if (query !== '') {
+               this.filteredCourses = this.filteredCourses.filter(course => course.title.toLowerCase().includes(query.toLowerCase())
+                  || course.description.toLowerCase().includes(query.toLowerCase())
+                  || course.category.toLowerCase().includes(query.toLowerCase()));
+            }
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
+            // Filter by completed
+            if (hideCompleted) {
+               this.filteredCourses = this.filteredCourses.filter(course => course.progress.completed === 0);
+            }
+         });
+   }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+   /**
+    * On destroy
+    */
+   ngOnDestroy(): void {
+      // Unsubscribe from all subscriptions
+      this._unsubscribeAll.next(null);
+      this._unsubscribeAll.complete();
+   }
 
-    /**
-     * Filter by search query
-     *
-     * @param query
-     */
-    filterByQuery(query: string): void
-    {
-        this.filters.query$.next(query);
-    }
+   // -----------------------------------------------------------------------------------------------------
+   // @ Public methods
+   // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Filter by category
-     *
-     * @param change
-     */
-    filterByCategory(change: MatSelectChange): void
-    {
-        this.filters.categorySlug$.next(change.value);
-    }
+   /**
+    * Filter by search query
+    *
+    * @param query
+    */
+   filterByQuery(query: string): void {
+      this.filters.query$.next(query);
+   }
 
-    /**
-     * Show/hide completed courses
-     *
-     * @param change
-     */
-    toggleCompleted(change: MatSlideToggleChange): void
-    {
-        this.filters.hideCompleted$.next(change.checked);
-    }
+   /**
+    * Filter by category
+    *
+    * @param change
+    */
+   filterByCategory(change: MatSelectChange): void {
+      this.filters.categorySlug$.next(change.value);
+   }
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any
-    {
-        return item.id || index;
-    }
+   /**
+    * Show/hide completed courses
+    *
+    * @param change
+    */
+   toggleCompleted(change: MatSlideToggleChange): void {
+      this.filters.hideCompleted$.next(change.checked);
+   }
+
+   /**
+    * Track by function for ngFor loops
+    *
+    * @param index
+    * @param item
+    */
+   trackByFn(index: number, item: any): any {
+      return item.id || index;
+   }
+
+   videoId = 'Gj_r0gnHfqk';
+   playerVars = {
+      controls: 0,
+      showinfo: 0,
+      rel: 0,
+      iv_load_policy: 3,
+      modestbranding: 1
+   };
 }

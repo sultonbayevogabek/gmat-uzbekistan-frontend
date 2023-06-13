@@ -22,7 +22,13 @@ export class ContactsService {
    }
 
    changeRole(id: string): Observable<{ ok: true; message: string }> {
-      console.log({ id });
       return this._httpClient.post<{ ok: true; message: string }>(environment.host + 'change-role', { id });
+   }
+
+   setScreenshotAsSeen(id: string) {
+      this._httpClient.post<{
+         ok: true;
+         message: string
+      }>(environment.host + 'set-screenshot-as-seen', { id }).subscribe();
    }
 }

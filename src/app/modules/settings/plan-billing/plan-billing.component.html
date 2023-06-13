@@ -61,19 +61,27 @@
 
 
     <ng-container *ngIf="loaded && screenshots?.length">
-        <div class="text-xl mb-3">Yuklagan skrinshotlar</div>
+        <div class="text-xl mb-3">Yuklangan skrinshotlar</div>
+        <div class="text-secondary mb-8">
+            1 dona skrinshot faylini yuklash mumkin. Boshqa rasmni yuklash uchun oldin yuklangan rasmni o'chiring. Tizim administratori siz yuklangan skrinshotni
+            ko'rsa rasm ustida ko'zcha belgisi va ko'rilgan vaqti paydo bo'ladi. Agar skrinshotni admin ko'rgan bo'lsa va sizga
+            tizimdan to'liq foydalanish huquqini bermagan bo'lsa telegram kontakt bilan bog'laning: <a class="text-primary" href="">@xodiyev</a>
+        </div>
 
-        <div class="grid grid-cols-3 mb-5">
+        <div class="grid grid-cols-3">
             <div class="relative rounded overflow-hidden" *ngFor="let s of screenshots">
                 <img class="w-full" [src]="environment.host + s.paymentScreenshot" alt="">
 
                 <div
-                        class="absolute inset-0 grid place-items-center bg-black bg-opacity-25 opacity-0 hover:opacity-100 cursor-pointer"
-                        (click)="deleteScreenshot(s?.id)"
-                        matRipple
-                        matTooltip="Skrinshotni o'chirish"
+                        class="absolute inset-0 flex items-start justify-end p-2 bg-black bg-opacity-50"
                 >
-                    <mat-icon class="icon-size-7 text-white" svgIcon="heroicons_solid:trash"></mat-icon>
+                    <button mat-icon-button (click)="deleteScreenshot(s?.id)">
+                        <mat-icon class="icon-size-5 text-white" svgIcon="heroicons_solid:trash"></mat-icon>
+                    </button>
+
+                    <button mat-icon-button *ngIf="s?.seenTime" [matTooltip]="'Tizim admini tomonidan ko\'rilgan vaqti: ' + (s?.seenTime| date: 'dd.MM.yyyy hh:mm')">
+                        <mat-icon class="icon-size-5 text-white" svgIcon="heroicons_solid:eye"></mat-icon>
+                    </button>
                 </div>
             </div>
         </div>
