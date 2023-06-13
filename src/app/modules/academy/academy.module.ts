@@ -18,6 +18,7 @@ import { AcademyListComponent } from 'app/modules/academy/list/list.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
    declarations: [
@@ -40,7 +41,8 @@ import { MatRippleModule } from '@angular/material/core';
       SharedModule,
       MatTabsModule,
       NgxYoutubePlayerModule,
-      MatRippleModule
+      MatRippleModule,
+      MatSnackBarModule
    ]
 })
 

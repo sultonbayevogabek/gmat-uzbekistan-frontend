@@ -12,6 +12,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { BehaviorSubject, combineLatest, Subject, takeUntil } from 'rxjs';
 import { AcademyService } from 'app/modules/academy/academy.service';
 import { Category, Course } from 'app/modules/academy/academy.types';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
    selector: 'academy-list',
@@ -22,7 +23,7 @@ import { Category, Course } from 'app/modules/academy/academy.types';
 
 export class AcademyListComponent implements OnInit, OnDestroy {
    title: string = '';
-   duration: number = null;
+   duration: string = '';
    unit: string = '';
    videoId: string = '';
    description: string = '';
@@ -50,7 +51,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       private _activatedRoute: ActivatedRoute,
       private _changeDetectorRef: ChangeDetectorRef,
       private _router: Router,
-      private _academyService: AcademyService
+      private _academyService: AcademyService,
+      private _snackbar: MatSnackBar
    ) {
    }
 
@@ -165,18 +167,40 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    }
 
    create() {
+      console.log(this.title.trim());
+      console.log(this.duration.trim());
+      console.log(this.unit.trim());
+      console.log(this.videoId.trim());
+      console.log(this.videoId.trim());
+      console.log(this.files);
       if (
-         !this.title.trim().length || this.duration
+         !this.title.trim().length || !this.duration.trim().length ||
+         !this.unit || !this.videoId.trim().length ||
+         !this.description.trim().length || !this.files.length
       ) {
-
+         this._snackbar.open(`Ma'lumotlarni to'liq kiriting`, 'OK', {
+            duration: 5000
+         });
+         return;
       }
       const formData: FormData = new FormData();
 
-      this.files.forEach(file => {
-         formData.append('file', file)
-      })
+      formData.append('title', this.title);
+      formData.append('duration', this.duration);
+      formData.append('unit', this.unit);
+      formData.append('videoId', this.videoId);
+      formData.append('description', this.description);
 
-      this._academyService.createLesson(formData).subscribe();
+      this.files.forEach(file => {
+         formData.append('file', file);
+      });
+
+      this._academyService.createLesson(formData)
+         .subscribe(() => {
+
+         }, () => {
+
+         });
    }
 
    trackByFn(index: number, item: any): any {

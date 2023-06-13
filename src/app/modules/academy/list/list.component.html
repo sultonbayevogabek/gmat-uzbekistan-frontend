@@ -37,27 +37,27 @@
                 </mat-form-field>
 
                 <mat-form-field class="fuse-mat-no-subscript">
-                    <mat-label>Dars davomiyligi (minut)</mat-label>
-                    <input type="number" matInput [(ngModel)]="duration">
+                    <mat-label>Dars davomiyligi</mat-label>
+                    <input type="text" matInput [(ngModel)]="duration">
                 </mat-form-field>
 
-                <mat-form-field class="fuse-mat-no-subscript" [(ngModel)]="unit">
+                <mat-form-field class="fuse-mat-no-subscript">
                     <mat-label>Bo'lim</mat-label>
-                    <mat-select>
+                    <mat-select [(ngModel)]="unit">
                         <mat-option [value]="'numbers'">Raqamlar</mat-option>
                         <mat-option [value]="'algorithms'">Algoritmlar</mat-option>
                         <mat-option [value]="'combinatorics'">Kombinatorika</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="fuse-mat-no-subscript" [(ngModel)]="videoId">
+                <mat-form-field class="fuse-mat-no-subscript">
                     <mat-label>Video ID</mat-label>
-                    <input type="text" matInput>
+                    <input type="text" matInput [(ngModel)]="videoId">
                 </mat-form-field>
 
-                <mat-form-field class="col-span-2 fuse-mat-no-subscript" [(ngModel)]="description">
+                <mat-form-field class="col-span-2 fuse-mat-no-subscript">
                     <mat-label>Darsga qisqacha tarif</mat-label>
-                    <input type="text" matInput>
+                    <input type="text" matInput [(ngModel)]="description">
                 </mat-form-field>
 
                 <ng-container *ngIf="files?.length">
