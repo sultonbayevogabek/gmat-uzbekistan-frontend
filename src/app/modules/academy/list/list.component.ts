@@ -21,6 +21,13 @@ import { Category, Course } from 'app/modules/academy/academy.types';
 })
 
 export class AcademyListComponent implements OnInit, OnDestroy {
+   title: string = '';
+   duration: number = null;
+   unit: string = '';
+   videoId: string = '';
+   description: string = '';
+   files = [];
+
    categories: Category[];
    courses: Course[];
    filteredCourses: Course[];
@@ -141,22 +148,38 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.filters.hideCompleted$.next(change.checked);
    }
 
-   /**
-    * Track by function for ngFor loops
-    *
-    * @param index
-    * @param item
-    */
+   onPdfFilesSelected(fileList: FileList) {
+      const files = fileList;
+
+      for (let i = 0, f; f = files[i]; i++) {
+         if (!f.type.match('application/pdf') || f.size > 3 * 1024 * 1024) {
+            continue;
+         }
+
+         this.files.push(f);
+      }
+   }
+
+   removeFile(i: number) {
+      this.files.splice(i, 1);
+   }
+
+   create() {
+      if (
+         !this.title.trim().length || this.duration
+      ) {
+
+      }
+      const formData: FormData = new FormData();
+
+      this.files.forEach(file => {
+         formData.append('file', file)
+      })
+
+      this._academyService.createLesson(formData).subscribe();
+   }
+
    trackByFn(index: number, item: any): any {
       return item.id || index;
    }
-
-   videoId = 'Gj_r0gnHfqk';
-   playerVars = {
-      controls: 0,
-      showinfo: 0,
-      rel: 0,
-      iv_load_policy: 3,
-      modestbranding: 1
-   };
 }

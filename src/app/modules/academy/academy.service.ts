@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { Category, Course } from 'app/modules/academy/academy.types';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -100,5 +101,9 @@ export class AcademyService
                 return of(course);
             })
         );
+    }
+
+    createLesson(payload: FormData) {
+        return this._httpClient.post(environment.host + 'create-lesson', payload);
     }
 }

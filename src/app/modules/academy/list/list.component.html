@@ -30,59 +30,75 @@
     <div class="flex flex-auto p-6 sm:p-10">
 
         <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
-            <form class="grid grid-cols-3 gap-4 mb-10">
-                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript">
+            <div class="grid grid-cols-3 gap-4 mb-10">
+                <mat-form-field class="fuse-mat-no-subscript">
                     <mat-label>Dars mavzusi</mat-label>
-                    <input type="text" matInput>
+                    <input type="text" matInput [(ngModel)]="title">
                 </mat-form-field>
 
-                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript">
+                <mat-form-field class="fuse-mat-no-subscript">
                     <mat-label>Dars davomiyligi (minut)</mat-label>
-                    <input type="number" matInput>
+                    <input type="number" matInput [(ngModel)]="duration">
                 </mat-form-field>
 
-                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript">
+                <mat-form-field class="fuse-mat-no-subscript" [(ngModel)]="unit">
                     <mat-label>Bo'lim</mat-label>
                     <mat-select>
-                        <mat-option>Raqamlar</mat-option>
-                        <mat-option>Algoritmlar</mat-option>
-                        <mat-option>Kombinatorika</mat-option>
+                        <mat-option [value]="'numbers'">Raqamlar</mat-option>
+                        <mat-option [value]="'algorithms'">Algoritmlar</mat-option>
+                        <mat-option [value]="'combinatorics'">Kombinatorika</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="col-span-3 fuse-mat-dense fuse-mat-no-subscript">
-                    <mat-label>Darsga qisqacha tarif</mat-label>
-                    <textarea matInput></textarea>
+                <mat-form-field class="fuse-mat-no-subscript" [(ngModel)]="videoId">
+                    <mat-label>Video ID</mat-label>
+                    <input type="text" matInput>
                 </mat-form-field>
 
-                <div class="flex items-center p-2.5 border rounded bg-card">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-primary-100">
-                        <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">PDF
+                <mat-form-field class="col-span-2 fuse-mat-no-subscript" [(ngModel)]="description">
+                    <mat-label>Darsga qisqacha tarif</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+
+                <ng-container *ngIf="files?.length">
+                    <div
+                            *ngFor="let file of files; let i = index"
+                            class="flex items-center p-2.5 shadow rounded bg-card mt-2">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-primary-100">
+                            <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">PDF
+                            </div>
                         </div>
-                    </div>
-                    <div class="ml-3">
-                        <div class="text-md font-medium truncate" title="montly-invoice.pdf">montly-invoice.pdf</div>
-                        <div class="text-sm font-medium truncate text-secondary" title="243449">243.45 KB</div>
-                    </div>
+                        <div class="ml-3 max-w-2/3">
+                            <div class="text-md font-medium truncate" [title]="file?.name">{{ file?.name }}</div>
+                            <div class="text-sm font-medium truncate text-secondary">{{ (file?.size / 1024).toFixed(2) }} KB</div>
+                        </div>
 
-                    <button class="self-start ml-auto" mat-icon-button>
-                        <mat-icon class="icon-size-5 text-gray-500" svgIcon="heroicons_outline:trash"></mat-icon>
-                    </button>
-                </div>
+                        <button class="self-start ml-auto" mat-icon-button (click)="removeFile(i)">
+                            <mat-icon class="icon-size-5 text-gray-500" svgIcon="heroicons_outline:trash"></mat-icon>
+                        </button>
+                    </div>
+                </ng-container>
 
-                <div class="col-span-3 flex justify-end gap-4">
-                    <label class="flex items-center justify-center px-5 gap-2 h-10 rounded-full hover:bg-hover cursor-pointer text-gray-600 font-medium" for="files" matRipple>
+
+                <div class="col-span-3 flex justify-end gap-4 pt-4">
+                    <label class="flex items-center justify-center px-5 gap-2 h-10 rounded-full hover:bg-hover cursor-pointer text-gray-600 font-medium" matRipple>
                         <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
                         <span>Uyga vazifa fayllarini yuklash</span>
+                        <input
+                                class="hidden"
+                                type="file"
+                                accept="application/pdf"
+                                multiple
+                                #fileInput
+                                (change)="onPdfFilesSelected(fileInput.files)"
+                        >
                     </label>
 
-                    <button mat-flat-button color="primary">
+                    <button mat-flat-button color="primary" (click)="create()">
                         Yangi dars yaratish
                     </button>
                 </div>
-
-                <input type="file" id="files">
-            </form>
+            </div>
 
             <!-- Filters -->
             <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
