@@ -13,7 +13,6 @@ import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
 import { academyRoutes } from 'app/modules/academy/academy.routing';
 import { AcademyComponent } from 'app/modules/academy/academy.component';
-import { AcademyDetailsComponent } from 'app/modules/academy/details/details.component';
 import { AcademyListComponent } from 'app/modules/academy/list/list.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
@@ -23,7 +22,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
    declarations: [
       AcademyComponent,
-      AcademyDetailsComponent,
       AcademyListComponent
    ],
    imports: [

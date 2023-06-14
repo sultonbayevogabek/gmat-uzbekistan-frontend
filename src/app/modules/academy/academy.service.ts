@@ -1,109 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { Category, Course } from 'app/modules/academy/academy.types';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { ILesson } from '../../interfaces/lesson.interface';
 
 @Injectable({
-    providedIn: 'root'
+   providedIn: 'root'
 })
-export class AcademyService
-{
-    // Private
-    private _categories: BehaviorSubject<Category[] | null> = new BehaviorSubject(null);
-    private _course: BehaviorSubject<Course | null> = new BehaviorSubject(null);
-    private _courses: BehaviorSubject<Course[] | null> = new BehaviorSubject(null);
+export class AcademyService {
+   constructor(private _httpClient: HttpClient) {
+   }
 
-    /**
-     * Constructor
-     */
-    constructor(private _httpClient: HttpClient)
-    {
-    }
+   createLesson(payload: FormData) {
+      return this._httpClient.post(environment.host + 'create-lesson', payload);
+   }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for categories
-     */
-    get categories$(): Observable<Category[]>
-    {
-        return this._categories.asObservable();
-    }
-
-    /**
-     * Getter for courses
-     */
-    get courses$(): Observable<Course[]>
-    {
-        return this._courses.asObservable();
-    }
-
-    /**
-     * Getter for course
-     */
-    get course$(): Observable<Course>
-    {
-        return this._course.asObservable();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Get categories
-     */
-    getCategories(): Observable<Category[]>
-    {
-        return this._httpClient.get<Category[]>('api/apps/academy/categories').pipe(
-            tap((response: any) => {
-                this._categories.next(response);
-            })
-        );
-    }
-
-    /**
-     * Get courses
-     */
-    getCourses(): Observable<Course[]>
-    {
-        return this._httpClient.get<Course[]>('api/apps/academy/courses').pipe(
-            tap((response: any) => {
-                this._courses.next(response);
-            })
-        );
-    }
-
-    /**
-     * Get course by id
-     */
-    getCourseById(id: string): Observable<Course>
-    {
-        return this._httpClient.get<Course>('api/apps/academy/courses/course', {params: {id}}).pipe(
-            map((course) => {
-
-                // Update the course
-                this._course.next(course);
-
-                // Return the course
-                return course;
-            }),
-            switchMap((course) => {
-
-                if ( !course )
-                {
-                    return throwError('Could not found course with id of ' + id + '!');
-                }
-
-                return of(course);
-            })
-        );
-    }
-
-    createLesson(payload: FormData) {
-        return this._httpClient.post(environment.host + 'create-lesson', payload);
-    }
+   getLessons(): Observable<{ ok: boolean; count: number; lessons: ILesson[] }> {
+      return this._httpClient.post<{ ok: boolean; count: number; lessons: ILesson[] }>(environment.host + 'get-lessons', {})
+   }
 }
