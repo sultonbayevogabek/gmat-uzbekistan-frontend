@@ -14,7 +14,11 @@ import { ScreenshotModalComponent } from '../screenshot-modal/screenshot-modal.c
 })
 
 export class ContactsListComponent implements OnInit, OnDestroy {
-   search: string = '';
+   searchParams: {
+      newScreenshot: true,
+      name: '',
+      role: 'user'
+   }
    count: number = 0;
    users: IUser[] = [];
    environment = environment;

@@ -15,7 +15,19 @@ export class AcademyService {
       return this._httpClient.post(environment.host + 'create-lesson', payload);
    }
 
-   getLessons(): Observable<{ ok: boolean; count: number; lessons: ILesson[] }> {
-      return this._httpClient.post<{ ok: boolean; count: number; lessons: ILesson[] }>(environment.host + 'get-lessons', {})
+   updateLesson(payload: FormData) {
+      return this._httpClient.post(environment.host + 'update-lesson', payload);
+   }
+
+   getLessons(searchParams = {}): Observable<{ ok: boolean; count: number; lessons: ILesson[] }> {
+      return this._httpClient.post<{ ok: boolean; count: number; lessons: ILesson[] }>(environment.host + 'get-lessons', searchParams)
+   }
+
+   deleteLesson(id: string): Observable<{ ok: boolean; message: string }> {
+      return this._httpClient.post<{ ok: boolean; message: string }>(environment.host + 'delete-lesson', { id })
+   }
+
+   incrementViewsCount(id: string) {
+      this._httpClient.post(environment.host + 'increment-views-count', { id }).subscribe()
    }
 }

@@ -17,29 +17,32 @@
                         </div>
                     </div>
 
-                    <!-- Main actions -->
-                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
-                        <div class="flex-auto">
-                            <mat-form-field
-                                    class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
-                                <mat-icon
-                                        class="icon-size-5"
-                                        matPrefix
-                                        [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                <input
-                                        matInput
-                                        [autocomplete]="'off'"
-                                        [placeholder]="'Foydalanuvchilarni qidirish'"
-                                        [(ngModel)]="search"
-                                >
-                            </mat-form-field>
-                        </div>
+                    <div class="grid grid-cols-3 gap-4 mt-4 sm:mt-0 md:mt-4">
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
+                            <mat-label>Foydalanuvchi ismi</mat-label>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                            <input
+                                    matInput
+                                    [autocomplete]="'off'"
+                                    [placeholder]="'Foydalanuvchilarni qidirish'"
+                                    [(ngModel)]="searchParams.name"
+                            >
+
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
+                                <mat-label>Foydalanuvchi roli</mat-label>
+                                <mat-select [(ngModel)]="searchParams.role">
+                                    <option [value]="'all'">Hammasi</option>
+                                    <option [value]="'user'">Hammasi</option>
+                                    <option [value]="'premium-user'">Hammasi</option>
+                                    <option [value]="'premium-user'">Hammasi</option>
+                                </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
 
                 <!-- Contacts list -->
                 <div *ngIf="users.length">
-                    <div class="z-20 flex items-center justify-between px-6 py-4 md:px-8 border-b" *ngFor="let user of users | search: search: 'name'">
+                    <div class="z-20 flex items-center justify-between px-6 py-4 md:px-8 border-b" *ngFor="let user of users">
                         <div class="flex">
                             <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                                 <ng-container *ngIf="user?.avatar">
@@ -64,12 +67,12 @@
                             <button
                                     mat-icon-button
                                     color="accent"
-                                    [matTooltip]="user?.payments[0].seenTime ? 'Ko\'rilgan vaqti: ' + (user?.payments[0].seenTime| date: 'dd.MM.yyyy hh:mm') : 'Ko\'rilmagan'"
-                                    *ngIf="user?.payments?.length"
-                                    (click)="openScreenshot(user?.payments[0])"
+                                    *ngIf="user?.payment"
+                                    [matTooltip]="user?.payment?.seenTime ? 'Ko\'rilgan vaqti: ' + (user?.payment?.seenTime| date: 'dd.MM.yyyy hh:mm') : 'Ko\'rilmagan'"
+                                    (click)="openScreenshot(user?.payment)"
                             >
-                                <mat-icon *ngIf="!user?.payments[0].seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
-                                <mat-icon *ngIf="user?.payments[0].seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                                <mat-icon *ngIf="!user?.payment?.seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
+                                <mat-icon *ngIf="user?.payment?.seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
                             </button>
                             <button mat-icon-button color="primary" (click)="changeRole(user?.id)">
                                 <mat-icon *ngIf="user?.role === 'user'" [svgIcon]="'heroicons_outline:star'"></mat-icon>

@@ -6,4 +6,5 @@ export interface ILesson {
    description?: string;
    videoId?: string;
    pdfFiles?: string[];
+   views?: number;
 }

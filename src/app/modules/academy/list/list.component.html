@@ -15,13 +15,12 @@
         </svg>
         <!-- @formatter:on -->
         <div class="z-10 relative flex flex-col items-center">
-            <h2 class="text-xl font-semibold">FUSE ACADEMY</h2>
+            <h2 class="text-xl font-semibold">GMAT O'ZBEKISTON</h2>
             <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-                What do you want to learn today?
+                Biz bilan xotirjam bo'ling
             </div>
             <div class="max-w-2xl mt-6 sm:text-2xl text-center tracking-tight text-secondary">
-                Our courses will step you through the process of a building small applications, or adding new features
-                to existing applications.
+                Video darslarni ko'rib o'rganib, GMAT sertifikatni olib 50% ustamani qo'lga kiriting
             </div>
         </div>
     </div>
@@ -30,7 +29,7 @@
     <div class="flex flex-auto p-6 sm:p-10">
 
         <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
-            <div class="grid grid-cols-3 gap-4 mb-10">
+            <div class="grid grid-cols-3 gap-4 mb-10" *ngIf="user?.role === 'admin'">
                 <mat-form-field class="fuse-mat-no-subscript">
                     <mat-label>Dars mavzusi</mat-label>
                     <input type="text" matInput [(ngModel)]="title">
@@ -81,7 +80,6 @@
                     </div>
                 </ng-container>
 
-
                 <div class="col-span-3 flex justify-end gap-4 pt-4">
                     <label class="flex items-center justify-center px-5 gap-2 h-10 rounded-full hover:bg-hover cursor-pointer text-gray-600 font-medium"
                            matRipple>
@@ -97,8 +95,8 @@
                         >
                     </label>
 
-                    <button mat-flat-button color="primary" (click)="create()">
-                        Yangi dars yaratish
+                    <button mat-flat-button color="primary" (click)="createOrUpdate()">
+                        {{ editableLessonId ? 'Darsni tahrirlash' : 'Yangi dars yaratish' }}
                     </button>
                 </div>
             </div>
@@ -106,7 +104,7 @@
             <!-- Filters -->
             <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
                 <mat-form-field class="fuse-mat-no-subscript w-full sm:w-36">
-                    <mat-select>
+                    <mat-select [(ngModel)]="searchParams.unit" (selectionChange)="getLessons()">
                         <mat-option [value]="'all'">Hammasi</mat-option>
                         <mat-option [value]="'numbers'">Raqamlar</mat-option>
                         <mat-option [value]="'algorithms'">Algoritmlar</mat-option>
@@ -121,94 +119,105 @@
                             class="icon-size-5"
                             [svgIcon]="'heroicons_solid:search'"></mat-icon>
                     <input
-                            placeholder="Search by title or description"
+                            placeholder="Dars nomi bo'yicha qidirish"
                             matInput
-                            #query>
+                            [(ngModel)]="searchParams.title"
+                            (keydown.enter)="getLessons()"
+                    >
                 </mat-form-field>
             </div>
 
 
-            <ng-container *ngIf="lessons.length; else noCourses">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
-                    <ng-container *ngFor="let lesson of lessons">
-                        <!-- Course -->
-                        <div class="flex flex-col h-96 shadow rounded-2xl overflow-hidden bg-card">
-                            <div class="flex flex-col p-6">
-                                <div class="flex items-center justify-between">
-                                    <!-- Course category -->
-                                    <!--                                    <ng-container-->
-                                    <!--                                            *ngIf="(course.category | fuseFindByKey:'slug':categories) as category">-->
-                                    <!--                                        <div-->
-                                    <!--                                                class="py-0.5 px-3 rounded-full text-sm font-semibold"-->
-                                    <!--                                                [ngClass]="{'text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500': category.slug === 'web',-->
-                                    <!--                                                        'text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500': category.slug === 'android',-->
-                                    <!--                                                        'text-pink-800 bg-pink-100 dark:text-pink-50 dark:bg-pink-500': category.slug === 'cloud',-->
-                                    <!--                                                        'text-amber-800 bg-amber-100 dark:text-amber-50 dark:bg-amber-500': category.slug === 'firebase'}">-->
-                                    <!--                                            {{category.title}}-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </ng-container>-->
-                                    <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                                        {{ units[lesson?.unit] }}
-                                    </div>
-                                    <!-- Completed at least once -->
-                                    <div class="flex items-center">
-                                        <mat-icon
-                                                class="icon-size-5 text-green-600"
-                                                [svgIcon]="'heroicons_solid:badge-check'"
-                                                [matTooltip]="'You completed this course at least once'"></mat-icon>
-                                    </div>
-                                </div>
-                                <!-- Course title & description -->
-                                <div class="mt-4 text-lg font-medium">{{ lesson?.title}}</div>
-                                <div class="mt-0.5 line-clamp-2 text-secondary">{{ lesson?.description}}</div>
-                                <div class="w-12 h-1 my-6 border-t-2"></div>
-                                <!-- Course time -->
-                                <div class="flex items-center leading-5 text-md text-secondary">
-                                    <mat-icon
-                                            class="icon-size-5 text-hint"
-                                            [svgIcon]="'heroicons_solid:clock'"></mat-icon>
-                                    <div class="ml-1.5">{{ lesson?.duration }}</div>
-                                </div>
-                                <!-- Course completion -->
-                                <div class="flex items-center mt-2 leading-5 text-md text-secondary">
-                                    <mat-icon
-                                            class="icon-size-5 text-hint"
-                                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-
-                                    <div class="ml-1.5">3275</div>
-                                </div>
+            <div *ngIf="lessons.length"
+                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
+                <div *ngFor="let lesson of lessons"
+                     class="flex flex-col h-96 shadow rounded-2xl overflow-hidden bg-card">
+                    <div class="flex flex-col p-6">
+                        <div class="flex items-center justify-between">
+                            <!-- Course category -->
+                            <!--                                    <ng-container-->
+                            <!--                                            *ngIf="(course.category | fuseFindByKey:'slug':categories) as category">-->
+                            <!--                                        <div-->
+                            <!--                                                class="py-0.5 px-3 rounded-full text-sm font-semibold"-->
+                            <!--                                                [ngClass]="{'text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500': category.slug === 'web',-->
+                            <!--                                                        'text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500': category.slug === 'android',-->
+                            <!--                                                        'text-pink-800 bg-pink-100 dark:text-pink-50 dark:bg-pink-500': category.slug === 'cloud',-->
+                            <!--                                                        'text-amber-800 bg-amber-100 dark:text-amber-50 dark:bg-amber-500': category.slug === 'firebase'}">-->
+                            <!--                                            {{category.title}}-->
+                            <!--                                        </div>-->
+                            <!--                                    </ng-container>-->
+                            <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                                {{ units[lesson?.unit] }}
                             </div>
-                            <!-- Footer -->
-                            <div class="flex flex-col w-full mt-auto">
 
-                                <!-- Course launch button -->
-                                <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
-                                    <a
-                                            mat-stroked-button
-                                    >
+                            <ng-container *ngIf="user?.role === 'admin'">
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon
+                                            class="icon-size-5"
+                                            [svgIcon]="'heroicons_solid:dots-vertical'"
+                                    ></mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="edit(lesson)">
+                                        <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="'heroicons_solid:pencil'"
+                                        ></mat-icon>
+                                        <span>Tahrirlash</span>
+                                    </button>
+                                    <button mat-menu-item (click)="deleteLesson(lesson?.id)">
+                                        <mat-icon
+                                                class="icon-size-4.5"
+                                                [svgIcon]="'heroicons_solid:trash'"
+                                        ></mat-icon>
+                                        <span>O'chirish</span>
+                                    </button>
+                                </mat-menu>
+                            </ng-container>
+
+                        </div>
+                        <!-- Course title & description -->
+                        <div class="mt-4 text-lg font-medium">{{ lesson?.title}}</div>
+                        <div class="mt-0.5 line-clamp-2 text-secondary">{{ lesson?.description}}</div>
+                        <div class="w-12 h-1 my-6 border-t-2"></div>
+                        <!-- Course time -->
+                        <div class="flex items-center leading-5 text-md text-secondary">
+                            <mat-icon
+                                    class="icon-size-5 text-hint"
+                                    [svgIcon]="'heroicons_solid:clock'"></mat-icon>
+                            <div class="ml-1.5">Dars davomiyligi: {{ lesson?.duration }}</div>
+                        </div>
+                        <div class="flex items-center mt-2 leading-5 text-md text-secondary">
+                            <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                            <div class="ml-1.5">Ko'rishlar soni: {{ lesson?.views || 0 }}</div>
+                        </div>
+                    </div>
+                    <!-- Footer -->
+                    <div class="flex flex-col w-full mt-auto">
+
+                        <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
+                            <a mat-stroked-button (click)="incrementViewsCount(lesson?.id)">
                                         <span class="inline-flex items-center">
                                             <mat-icon
                                                     class="mr-2 icon-size-5"
                                                     [svgIcon]="'heroicons_solid:eye'"></mat-icon>
                                             Darsni ko'rish
                                         </span>
-                                    </a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                    </ng-container>
+                    </div>
                 </div>
-            </ng-container>
+            </div>
 
-            <!-- No courses -->
-            <ng-template #noCourses>
-                <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
-                    <mat-icon
-                            class="icon-size-24"
-                            [svgIcon]="'heroicons_outline:document-search'"></mat-icon>
-                    <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">No courses found!</div>
-                </div>
-            </ng-template>
+            <div class="flex flex-auto flex-col items-center justify-center pt-10 bg-gray-100 dark:bg-transparent"
+                 *ngIf="loaded && !lessons?.length">
+                <mat-icon
+                        class="icon-size-24"
+                        [svgIcon]="'heroicons_outline:document-search'"
+                ></mat-icon>
+                <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">Darslar topilmadi (</div>
+            </div>
+
         </div>
 
     </div>

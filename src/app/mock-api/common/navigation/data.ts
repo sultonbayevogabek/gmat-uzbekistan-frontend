@@ -11,14 +11,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
         roles: ['user', 'premium-user', 'admin']
     },
     {
-        id: 'messages',
-        title: 'Xabarlar',
-        type: 'basic',
-        icon: 'heroicons_outline:chat-alt',
-        link: '/chat',
-        roles: ['admin']
-    },
-    {
         id: 'teachers',
         title: `Foydalanuvchilar`,
         type: 'basic',

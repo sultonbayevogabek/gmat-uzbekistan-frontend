@@ -10,6 +10,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { AcademyService } from 'app/modules/academy/academy.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ILesson } from '../../../interfaces/lesson.interface';
+import { IUser } from '../../../interfaces/user.interface';
+import { AuthService } from '../../auth/auth.service';
+import { Confirmable } from '../../../decorators/confirmation.decorator';
 
 @Component({
    selector: 'academy-list',
@@ -19,11 +22,18 @@ import { ILesson } from '../../../interfaces/lesson.interface';
 })
 
 export class AcademyListComponent implements OnInit, OnDestroy {
+   loaded = false;
+   user: IUser;
    units = {
       all: 'Hammasi',
       numbers: 'Raqamlar',
       algorithms: 'Algoritmlar',
       combinatorics: 'Kombinatorika',
+   };
+   editableLessonId: string;
+   searchParams = {
+      unit: 'all',
+      title: ''
    };
    title: string = 'Murakkab sonlar ustida amallar bajarish';
    duration: string = '27 minut';
@@ -38,25 +48,30 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    constructor(
       private _changeDetectorRef: ChangeDetectorRef,
       private _academyService: AcademyService,
+      private _authService: AuthService,
       private _snackbar: MatSnackBar
    ) {
    }
 
    ngOnInit(): void {
+      this._authService.user$.subscribe((user) => {
+         this.user = user;
+      });
       this.getLessons();
    }
 
    getLessons() {
-      this._academyService.getLessons()
+      this._academyService.getLessons(this.searchParams)
          .pipe(takeUntil(this._unsubscribeAll))
          .subscribe((res) => {
+            this.loaded = true;
             this.lessons = res?.lessons;
             this._changeDetectorRef.markForCheck();
          });
    }
 
    onPdfFilesSelected(fileList: FileList) {
-      for (let i = 0, f; fileList[i]; i++) {
+      for (let i = 0, f; f = fileList[i]; i++) {
          if (!f.type.match('application/pdf') || f.size > 3 * 1024 * 1024) {
             continue;
          }
@@ -69,7 +84,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.files.splice(i, 1);
    }
 
-   create() {
+   createOrUpdate() {
       if (
          !this.title.trim().length || !this.duration.trim().length ||
          !this.unit || !this.videoId.trim().length ||
@@ -92,12 +107,71 @@ export class AcademyListComponent implements OnInit, OnDestroy {
          formData.append('files', file);
       });
 
-      this._academyService.createLesson(formData)
+      if (!this.editableLessonId) {
+         this._academyService.createLesson(formData)
+            .subscribe(() => {
+               this.clear();
+               this._snackbar.open(`Yangi dars yaratildi`, 'OK', {
+                  duration: 5000
+               });
+               this.getLessons();
+            }, () => {
+               this._snackbar.open(`Darsni yaratishda xatolik yuz berdi`, 'OK', {
+                  duration: 5000
+               });
+            });
+         return;
+      }
+
+      formData.append('id', this.editableLessonId);
+      this._academyService.updateLesson(formData)
          .subscribe(() => {
-
+            this.clear();
+            this._snackbar.open(`Yangi dars yaratildi`, 'OK', {
+               duration: 5000
+            });
+            this.getLessons();
          }, () => {
-
+            this._snackbar.open(`Darsni yaratishda xatolik yuz berdi`, 'OK', {
+               duration: 5000
+            });
          });
+   }
+
+   edit(lesson: ILesson) {
+      this.editableLessonId = lesson?.id;
+      this.title = lesson?.title;
+      this.duration = lesson?.duration;
+      this.unit = lesson?.unit;
+      this.videoId = lesson?.videoId;
+      this.description = lesson?.description;
+      this.files = [];
+   }
+
+   clear() {
+      this.title = '';
+      this.duration = '';
+      this.unit = '';
+      this.videoId = '';
+      this.description = '';
+      this.files = [];
+      this._changeDetectorRef.markForCheck();
+   }
+
+   @Confirmable({
+      title: `Darsni o'chirish`,
+      message: `Darsni o'chirishni tasdiqlaysizmi?`
+   })
+   deleteLesson(id: string) {
+      this._academyService.deleteLesson(id)
+         .pipe(takeUntil(this._unsubscribeAll))
+         .subscribe(() => {
+            this.getLessons();
+         });
+   }
+
+   incrementViewsCount(id: string) {
+      this._academyService.incrementViewsCount(id);
    }
 
    ngOnDestroy() {

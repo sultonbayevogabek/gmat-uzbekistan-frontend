@@ -9,7 +9,7 @@ export interface IUser {
    avatar?: string;
    isDeleted?: boolean;
    password?: string;
-   payments?: IPayment[]
+   payment?: IPayment
 }
 
 export interface IPayment {

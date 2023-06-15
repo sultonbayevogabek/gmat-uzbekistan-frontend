@@ -38,10 +38,6 @@ export const appRoutes: Route[] = [
             loadChildren: () => import('app/modules/academy/academy.module').then(m => m.AcademyModule)
          },
          {
-            path: 'chat',
-            loadChildren: () => import('app/modules/chat/chat.module').then(m => m.ChatModule)
-         },
-         {
             canActivate: [ AdminGuard ],
             path: 'users',
             loadChildren: () => import('app/modules/contacts/contacts.module').then(m => m.ContactsModule)
