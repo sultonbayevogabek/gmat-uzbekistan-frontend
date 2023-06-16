@@ -13,8 +13,8 @@ export class ContactsService {
    ) {
    }
 
-   getUsers(): Observable<{ ok: boolean; users: IUser[]; count: number }> {
-      return this._httpClient.post<{ ok: boolean; users: IUser[]; count: number }>(environment.host + 'get-users', {});
+   getUsers(searchParams): Observable<{ ok: boolean; users: IUser[]; count: number }> {
+      return this._httpClient.post<{ ok: boolean; users: IUser[]; count: number }>(environment.host + 'get-users', searchParams);
    }
 
    deleteUser(id: string): Observable<{ ok: true; message: string }> {

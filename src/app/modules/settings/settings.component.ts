@@ -26,9 +26,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'account';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService
@@ -55,12 +52,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 icon: 'heroicons_outline:credit-card',
                 title: `To'lov`,
                 description: `Kursga yozilish uchun to'lov qilish`
-            },
-            {
-                id: 'team',
-                icon: 'heroicons_outline:user-group',
-                title: 'Amdinlar',
-                description: 'Tizimda yangi adminlarni tayinlash'
             }
         ];
 

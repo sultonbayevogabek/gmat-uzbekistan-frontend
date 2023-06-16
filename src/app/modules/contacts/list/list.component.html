@@ -20,22 +20,31 @@
                     <div class="grid grid-cols-3 gap-4 mt-4 sm:mt-0 md:mt-4">
                         <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
                             <mat-label>Foydalanuvchi ismi</mat-label>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
                             <input
                                     matInput
                                     [autocomplete]="'off'"
                                     [placeholder]="'Foydalanuvchilarni qidirish'"
                                     [(ngModel)]="searchParams.name"
+                                    (keydown.enter)="getUserList()"
                             >
+                        </mat-form-field>
 
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
-                                <mat-label>Foydalanuvchi roli</mat-label>
-                                <mat-select [(ngModel)]="searchParams.role">
-                                    <option [value]="'all'">Hammasi</option>
-                                    <option [value]="'user'">Hammasi</option>
-                                    <option [value]="'premium-user'">Hammasi</option>
-                                    <option [value]="'premium-user'">Hammasi</option>
-                                </mat-select>
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
+                            <mat-label>Foydalanuvchi roli</mat-label>
+                            <mat-select [(ngModel)]="searchParams.role" (selectionChange)="getUserList()">
+                                <mat-option [value]="'all'">Hammasi</mat-option>
+                                <mat-option [value]="'user'">Oddiy foydalanuvchilar</mat-option>
+                                <mat-option [value]="'premium-user'">Premium foydalanuvchilar</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
+                            <mat-label>Skrinshot</mat-label>
+                            <mat-select [(ngModel)]="searchParams.screenshotSeen" (selectionChange)="getUserList()">
+                                <mat-option [value]="'all'">Hammasi</mat-option>
+                                <mat-option [value]="'seen'">Ko'rilgan</mat-option>
+                                <mat-option [value]="'not-seen'">Ko'rilmagan</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
@@ -71,8 +80,8 @@
                                     [matTooltip]="user?.payment?.seenTime ? 'Ko\'rilgan vaqti: ' + (user?.payment?.seenTime| date: 'dd.MM.yyyy hh:mm') : 'Ko\'rilmagan'"
                                     (click)="openScreenshot(user?.payment)"
                             >
-                                <mat-icon *ngIf="!user?.payment?.seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
-                                <mat-icon *ngIf="user?.payment?.seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                                <mat-icon *ngIf="!user?.payment?.seenTime" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                                <mat-icon *ngIf="user?.payment?.seenTime" [svgIcon]="'heroicons_outline:document'"></mat-icon>
                             </button>
                             <button mat-icon-button color="primary" (click)="changeRole(user?.id)">
                                 <mat-icon *ngIf="user?.role === 'user'" [svgIcon]="'heroicons_outline:star'"></mat-icon>

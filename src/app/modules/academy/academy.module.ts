@@ -15,15 +15,23 @@ import { academyRoutes } from 'app/modules/academy/academy.routing';
 import { AcademyComponent } from 'app/modules/academy/academy.component';
 import { AcademyListComponent } from 'app/modules/academy/list/list.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LessonModalComponent } from './lesson-modal/lesson-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+import { YoutubePlayer } from './youtube-player/youtube-player.component';
+import { VideoPlayerComponent } from './video-player/video-player.component';
 
 @NgModule({
    declarations: [
       AcademyComponent,
-      AcademyListComponent
+      AcademyListComponent,
+      LessonModalComponent,
+      YoutubePlayer,
+      VideoPlayerComponent
    ],
    imports: [
       RouterModule.forChild(academyRoutes),
@@ -39,10 +47,12 @@ import { MatMenuModule } from '@angular/material/menu';
       FuseFindByKeyPipeModule,
       SharedModule,
       MatTabsModule,
-      NgxYoutubePlayerModule,
       MatRippleModule,
       MatSnackBarModule,
-      MatMenuModule
+      MatMenuModule,
+      MatProgressSpinnerModule,
+      MatDialogModule,
+      YouTubePlayerModule
    ]
 })
 

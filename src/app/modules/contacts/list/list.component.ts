@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   ChangeDetectorRef,
+   Component,
+   OnDestroy,
+   OnInit,
+   ViewEncapsulation
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ContactsService } from '../contacts.service';
 import { IPayment, IUser } from '../../../interfaces/user.interface';
@@ -10,12 +17,14 @@ import { ScreenshotModalComponent } from '../screenshot-modal/screenshot-modal.c
 
 @Component({
    selector: 'contacts-list',
-   templateUrl: './list.component.html'
+   templateUrl: './list.component.html',
+   encapsulation: ViewEncapsulation.None,
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ContactsListComponent implements OnInit, OnDestroy {
-   searchParams: {
-      newScreenshot: true,
+   searchParams = {
+      screenshotSeen: 'all',
       name: '',
       role: 'user'
    }
@@ -40,7 +49,8 @@ export class ContactsListComponent implements OnInit, OnDestroy {
    }
 
    getUserList() {
-      this._usersService.getUsers().subscribe((response) => {
+      this._usersService.getUsers(this.searchParams)
+         .subscribe((response) => {
          this.users = response?.users;
          this.count = response?.count;
          this._changeDetectorRef.markForCheck();

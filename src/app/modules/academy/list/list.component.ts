@@ -13,6 +13,9 @@ import { ILesson } from '../../../interfaces/lesson.interface';
 import { IUser } from '../../../interfaces/user.interface';
 import { AuthService } from '../../auth/auth.service';
 import { Confirmable } from '../../../decorators/confirmation.decorator';
+import { MatDialog } from '@angular/material/dialog';
+import { LessonModalComponent } from '../lesson-modal/lesson-modal.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
    selector: 'academy-list',
@@ -41,6 +44,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    videoId: string = 'TLuaTrYh7Pk';
    description: string = 'Bu darsda murakkab sonlar ustida turli qiyinlikdagi masalalarni ishlashni o\'rganamiz';
    files = [];
+   video: any;
    lessons: ILesson[] = [];
 
    private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -49,7 +53,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       private _changeDetectorRef: ChangeDetectorRef,
       private _academyService: AcademyService,
       private _authService: AuthService,
-      private _snackbar: MatSnackBar
+      private _snackbar: MatSnackBar,
+      private _matDialog: MatDialog
    ) {
    }
 
@@ -58,6 +63,10 @@ export class AcademyListComponent implements OnInit, OnDestroy {
          this.user = user;
       });
       this.getLessons();
+
+      this._matDialog.open(LessonModalComponent, {
+         panelClass: 'lesson-modal'
+      })
    }
 
    getLessons() {
@@ -78,6 +87,10 @@ export class AcademyListComponent implements OnInit, OnDestroy {
 
          this.files.push(f);
       }
+   }
+
+   onVideoFileSelected(fileList: FileList) {
+      this.video = fileList[0];
    }
 
    removeFile(i: number) {
@@ -103,6 +116,10 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       formData.append('videoId', this.videoId);
       formData.append('description', this.description);
 
+      if (this.video) {
+         formData.append('video', this.video);
+      }
+
       this.files.forEach(file => {
          formData.append('files', file);
       });
@@ -127,7 +144,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this._academyService.updateLesson(formData)
          .subscribe(() => {
             this.clear();
-            this._snackbar.open(`Yangi dars yaratildi`, 'OK', {
+            this._snackbar.open(`Dars ma'lumotlari o'zgartirildi`, 'OK', {
                duration: 5000
             });
             this.getLessons();
@@ -146,15 +163,18 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.videoId = lesson?.videoId;
       this.description = lesson?.description;
       this.files = [];
+      this.video = null;
    }
 
    clear() {
+      this.editableLessonId = null;
       this.title = '';
       this.duration = '';
       this.unit = '';
       this.videoId = '';
       this.description = '';
       this.files = [];
+      this.video = null;
       this._changeDetectorRef.markForCheck();
    }
 
@@ -178,4 +198,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this._unsubscribeAll.next(null);
       this._unsubscribeAll.complete();
    }
+
+   protected readonly environment = environment;
 }

@@ -2,3 +2,6 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+:host ::ng-deep .ytp-chrome-controls .ytp-title-link.ytp-title-channel-logo {
+  display: none;
+}

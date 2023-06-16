@@ -13,7 +13,6 @@ import { SharedModule } from 'app/shared/shared.module';
 import { SettingsComponent } from 'app/modules/settings/settings.component';
 import { SettingsAccountComponent } from 'app/modules/settings/account/account.component';
 import { SettingsPlanBillingComponent } from 'app/modules/settings/plan-billing/plan-billing.component';
-import { SettingsTeamComponent } from 'app/modules/settings/team/team.component';
 import { settingsRoutes } from 'app/modules/settings/settings.routing';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -26,8 +25,7 @@ import {MatRippleModule} from "@angular/material/core";
    declarations: [
       SettingsComponent,
       SettingsAccountComponent,
-      SettingsPlanBillingComponent,
-      SettingsTeamComponent
+      SettingsPlanBillingComponent
    ],
     imports: [
         RouterModule.forChild(settingsRoutes),

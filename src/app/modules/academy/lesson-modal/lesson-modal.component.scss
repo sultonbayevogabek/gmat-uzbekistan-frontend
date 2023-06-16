@@ -1,0 +1,23 @@
+.lesson-modal {
+    width: 80%;
+}
+
+@media only screen and (max-width: 960px) {
+    .lesson-modal {
+        max-width: 100% !important;
+        width: 100% !important;
+        align-self: stretch;
+    }
+
+    .lesson-modal .mat-dialog-container {
+        border-radius: 0 !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    .lesson-modal .mat-dialog-content {
+        padding: 0;
+        margin: 0;
+        max-height: none;
+    }
+}
