@@ -249,16 +249,14 @@
                     </div>
                     <!-- Footer -->
                     <div class="flex flex-col w-full mt-auto">
-
                         <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
-                            <a mat-stroked-button (click)="incrementViewsCount(lesson?.id)">
-                                        <span class="inline-flex items-center">
-                                            <mat-icon
-                                                    class="mr-2 icon-size-5"
-                                                    [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-                                            Darsni ko'rish
-                                        </span>
-                            </a>
+                            <button mat-stroked-button (click)="openLesson(lesson)">
+                                <mat-icon *ngIf="!lesson?.videoUrl" class="mr-2 icon-size-5"
+                                          [svgIcon]="'heroicons_solid:lock-closed'"></mat-icon>
+                                <mat-icon *ngIf="lesson?.videoUrl" class="mr-2 icon-size-5"
+                                          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                Darsni ko'rish
+                            </button>
                         </div>
                     </div>
                 </div>

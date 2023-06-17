@@ -63,10 +63,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
          this.user = user;
       });
       this.getLessons();
-
-      this._matDialog.open(LessonModalComponent, {
-         panelClass: 'lesson-modal'
-      })
    }
 
    getLessons() {
@@ -190,8 +186,15 @@ export class AcademyListComponent implements OnInit, OnDestroy {
          });
    }
 
-   incrementViewsCount(id: string) {
-      this._academyService.incrementViewsCount(id);
+   openLesson(lesson: ILesson) {
+      if (lesson?.videoUrl) {
+         this._academyService.incrementViewsCount(lesson?.id);
+
+         this._matDialog.open(LessonModalComponent, {
+            panelClass: 'lesson-modal',
+            data: lesson
+         })
+      }
    }
 
    ngOnDestroy() {

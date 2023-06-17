@@ -2,7 +2,7 @@
     <div class="md:col-span-5 bg-gray-100 md:rounded-xl overflow-hidden" #videoWrapper>
         <video-player
                 class="w-full"
-                [videoUrl]="'http://localhost:4000/videos/6b9f70d17644a6625ccd53bf9720a705.mp4'"
+                [videoUrl]="environment?.host + data?.videoUrl"
         ></video-player>
     </div>
 
@@ -10,7 +10,7 @@
     <div class="md:col-span-3 pt-3 px-4 pb-6 md:p-0">
         <div class="flex items-center justify-between mb-2">
             <div class="py-1.5 px-3 rounded text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                {{ 'Kombinatorika' }}
+                {{ units[data?.unit] }}
             </div>
 
             <button mat-icon-button mat-dialog-close>
@@ -19,61 +19,44 @@
         </div>
 
 
-        <div class="text-lg font-medium mb-2">Sonlarni ulashni o'rganish</div>
-        <div class="line-clamp-2 text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet molestiae quo quod.</div>
+        <div class="text-lg font-medium mb-2">{{ data?.title }}</div>
+        <div class="line-clamp-2 text-secondary">{{ data?.description }}</div>
         <div class="w-full h-1 my-3 border-t-2"></div>
         <!-- Course time -->
         <div class="flex items-center leading-5 text-md text-secondary mb-1">
             <mat-icon
                     class="icon-size-5 text-hint"
                     [svgIcon]="'heroicons_solid:clock'"></mat-icon>
-            <div class="ml-1.5">Dars davomiyligi: 35 minut</div>
+            <div class="ml-1.5">Dars davomiyligi: {{ data?.duration }}</div>
         </div>
         <div class="flex items-center leading-5 text-md text-secondary mb-3">
             <mat-icon
                     class="icon-size-5 text-hint"
                     [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-            <div class="ml-1.5">Ko'rishlar soni: 353</div>
+            <div class="ml-1.5">Ko'rishlar soni: {{ data?.views }}</div>
         </div>
 
-        <div class="text-lg font-medium mb-2">Uyga vazifalar</div>
+        <ng-container *ngIf="data?.pdfFiles?.length">
 
-        <div class="flex flex-col gap-2">
-            <div class="flex items-center p-2.5 shadow rounded bg-primary-50">
-                <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-card">
-                    <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">
-                        PDF
-                    </div>
-                </div>
-                <div class="ml-3 max-w-2/3">
-                    <div class="text-md font-medium truncate" [title]="'Nimadir fayli'">{{ '1-son darsning uy ishi' }}</div>
-                    <div class="text-sm font-medium truncate text-secondary">{{ (8726387 / 1024).toFixed(2) }}
-                        KB
-                    </div>
-                </div>
+            <div class="text-lg font-medium mb-2">Uyga vazifalar</div>
 
-                <button class="self-start ml-auto" mat-icon-button>
-                    <mat-icon class="icon-size-5 text-gray-500" svgIcon="heroicons_outline:eye"></mat-icon>
-                </button>
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center p-2.5 shadow rounded bg-primary-50" *ngFor="let file of data?.pdfFiles; let i = index">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-card">
+                        <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">
+                            PDF
+                        </div>
+                    </div>
+                    <div class="ml-3 max-w-2/3">
+                        <div class="text-md font-medium truncate">Uy ishi - {{ i + 1 }}</div>
+                    </div>
+
+                    <a class="self-start ml-auto" target="_blank" [href]="environment.host + file" mat-icon-button>
+                        <mat-icon class="icon-size-5 text-gray-500" svgIcon="heroicons_outline:eye"></mat-icon>
+                    </a>
+                </div>
             </div>
 
-            <div class="flex items-center p-2.5 shadow rounded bg-primary-50">
-                <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-card">
-                    <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">
-                        PDF
-                    </div>
-                </div>
-                <div class="ml-3 max-w-2/3">
-                    <div class="text-md font-medium truncate" [title]="'Nimadir fayli'">{{ '1-son darsning uy ishi' }}</div>
-                    <div class="text-sm font-medium truncate text-secondary">{{ (8726387 / 1024).toFixed(2) }}
-                        KB
-                    </div>
-                </div>
-
-                <button class="self-start ml-auto" mat-icon-button>
-                    <mat-icon class="icon-size-5 text-gray-500" svgIcon="heroicons_outline:eye"></mat-icon>
-                </button>
-            </div>
-        </div>
+        </ng-container>
     </div>
 </mat-dialog-content>

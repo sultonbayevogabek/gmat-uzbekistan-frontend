@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/modules/auth/auth.service';
-import {
-   SocialAuthService
-} from '@abacritt/angularx-social-login';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
    selector: 'auth-sign-in',
@@ -31,6 +29,7 @@ export class AuthSignInComponent implements OnInit {
    }
 
    ngOnInit(): void {
+      localStorage.clear();
       this.signInForm = this._formBuilder.group({
             phone: [ '999639773', Validators.required ],
             password: [ 'Ogabek19991031', [ Validators.required, Validators.minLength(6) ] ]

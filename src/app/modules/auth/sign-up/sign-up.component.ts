@@ -27,10 +27,11 @@ export class AuthSignUpComponent implements OnInit {
    }
 
    ngOnInit(): void {
+      localStorage.clear();
       this.signUpForm = this._formBuilder.group({
-            name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-            phone: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            name: [ '', [ Validators.required, Validators.minLength(3), Validators.maxLength(32) ] ],
+            phone: [ '', Validators.required ],
+            password: [ '', [ Validators.required, Validators.minLength(6) ] ]
          }
       );
       this._socialAuthService.authState.subscribe((user) => {
@@ -75,7 +76,7 @@ export class AuthSignUpComponent implements OnInit {
       this.showAlert = false;
       this._authService.signUp({
          ...this.signUpForm.value,
-         phone: `+998${this.signUpForm.get('phone').value}`
+         phone: `+998${ this.signUpForm.get('phone').value }`
       }).subscribe(null, ({ error: { error } }) => {
             this.signUpForm.enable();
             if (error === 'User has been blocked by system') {

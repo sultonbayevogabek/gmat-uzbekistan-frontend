@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
+import { ILesson } from '../../../interfaces/lesson.interface';
 
 @Component({
    selector: 'lesson-modal',
@@ -11,9 +12,15 @@ import { environment } from '../../../../environments/environment';
 
 export class LessonModalComponent implements OnInit {
    environment = environment;
+   units = {
+      all: 'Hammasi',
+      numbers: 'Raqamlar',
+      algorithms: 'Algoritmlar',
+      combinatorics: 'Kombinatorika',
+   };
 
    constructor(
-      @Inject(MAT_DIALOG_DATA) public data: any,
+      @Inject(MAT_DIALOG_DATA) public data: ILesson,
       private _changeDetectorRef: ChangeDetectorRef
    ) {
    }
