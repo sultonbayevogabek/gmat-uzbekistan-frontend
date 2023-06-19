@@ -1,13 +1,13 @@
 {
-    "name": "fuse-angular",
+    "name": "gmat",
     "version": "15.0.0",
-    "description": "Fuse - Angular Admin Template and Starter Project",
+    "description": "Gmat uzbekistan",
     "author": "https://themeforest.net/user/srcn",
     "license": "https://themeforest.net/licenses/standard",
     "private": true,
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --host 0.0.0.0",
+        "start": "ng serve --port=8080",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
