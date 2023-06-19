@@ -14,7 +14,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 })
 
 export class AuthSignUpComponent implements OnInit {
-   alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
+   alert: { type: FuseAlertType; message: string } = { type: 'error', message: 'Tizimga kirishda noma\'lum xatolik yuz berdi' };
    signUpForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -79,12 +79,14 @@ export class AuthSignUpComponent implements OnInit {
          phone: `+998${ this.signUpForm.get('phone').value }`
       }).subscribe(null, ({ error: { error } }) => {
             this.signUpForm.enable();
+
             if (error === 'User has been blocked by system') {
                this.alert.message = `Foydalanuvchi bloklangan`;
             }
             if (error === 'The phone number has already been registered') {
                this.alert.message = `Bu telefon raqam tizimda ro'yxatdan o'tgan`;
             }
+
             this.showAlert = true;
          }
       );

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
 import { ILesson } from '../../../interfaces/lesson.interface';
@@ -10,7 +10,7 @@ import { ILesson } from '../../../interfaces/lesson.interface';
    encapsulation: ViewEncapsulation.None
 })
 
-export class LessonModalComponent implements OnInit {
+export class LessonModalComponent {
    environment = environment;
    units = {
       all: 'Hammasi',
@@ -20,12 +20,7 @@ export class LessonModalComponent implements OnInit {
    };
 
    constructor(
-      @Inject(MAT_DIALOG_DATA) public data: ILesson,
-      private _changeDetectorRef: ChangeDetectorRef
+      @Inject(MAT_DIALOG_DATA) public data: ILesson
    ) {
-   }
-
-   ngOnInit() {
-
    }
 }

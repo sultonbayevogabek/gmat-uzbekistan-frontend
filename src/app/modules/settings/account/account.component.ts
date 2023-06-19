@@ -1,10 +1,4 @@
-import {
-   ChangeDetectorRef,
-   Component,
-   OnDestroy,
-   OnInit,
-   ViewEncapsulation
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsService } from '../settings.service';
@@ -38,8 +32,7 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
       private _formBuilder: UntypedFormBuilder,
       private _settingsService: SettingsService,
       private _authService: AuthService,
-      private _snackbar: MatSnackBar,
-      private _changeDetectorRef: ChangeDetectorRef
+      private _snackbar: MatSnackBar
    ) {
    }
 
@@ -185,9 +178,6 @@ export class SettingsAccountComponent implements OnInit, OnDestroy {
                duration: 5000
             });
          });
-   }
-
-   removeAvatar() {
    }
 
    ngOnDestroy() {

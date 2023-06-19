@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { map, Observable, of } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { AuthService } from 'app/modules/auth/auth.service';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class AdminGuard implements CanActivate {
             if (response?.user && response?.user?.role === 'admin') {
                return true;
             } else {
-               this._router.navigate(['404']).then();
+               this._router.navigate([ '404' ]).then();
                return false;
             }
          })

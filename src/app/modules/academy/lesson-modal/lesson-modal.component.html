@@ -6,7 +6,6 @@
         ></video-player>
     </div>
 
-
     <div class="md:col-span-3 pt-3 px-4 pb-6 md:p-0">
         <div class="flex items-center justify-between mb-2">
             <div class="py-1.5 px-3 rounded text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
@@ -18,11 +17,9 @@
             </button>
         </div>
 
-
         <div class="text-lg font-medium mb-2">{{ data?.title }}</div>
         <div class="line-clamp-2 text-secondary">{{ data?.description }}</div>
         <div class="w-full h-1 my-3 border-t-2"></div>
-        <!-- Course time -->
         <div class="flex items-center leading-5 text-md text-secondary mb-1">
             <mat-icon
                     class="icon-size-5 text-hint"
@@ -41,7 +38,8 @@
             <div class="text-lg font-medium mb-2">Uyga vazifalar</div>
 
             <div class="flex flex-col gap-2">
-                <div class="flex items-center p-2.5 shadow rounded bg-primary-50" *ngFor="let file of data?.pdfFiles; let i = index">
+                <div class="flex items-center p-2.5 shadow rounded bg-primary-50"
+                     *ngFor="let file of data?.pdfFiles; let i = index">
                     <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-card">
                         <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">
                             PDF

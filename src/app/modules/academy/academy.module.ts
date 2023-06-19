@@ -46,7 +46,6 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
       MatTooltipModule,
       FuseFindByKeyPipeModule,
       SharedModule,
-      MatTabsModule,
       MatRippleModule,
       MatSnackBarModule,
       MatMenuModule,

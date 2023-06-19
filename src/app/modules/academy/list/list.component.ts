@@ -25,7 +25,7 @@ import { environment } from '../../../../environments/environment';
 })
 
 export class AcademyListComponent implements OnInit, OnDestroy {
-   loaded = false;
+   loaded: boolean = false;
    user: IUser;
    units = {
       all: 'Hammasi',
@@ -38,13 +38,12 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       unit: 'all',
       title: ''
    };
-   title: string = 'Murakkab sonlar ustida amallar bajarish';
-   duration: string = '27 minut';
+   title: string = '';
+   duration: string = '';
    unit: string = 'numbers';
-   videoId: string = 'TLuaTrYh7Pk';
-   description: string = 'Bu darsda murakkab sonlar ustida turli qiyinlikdagi masalalarni ishlashni o\'rganamiz';
+   description: string = '';
    files = [];
-   video: any;
+   video;
    lessons: ILesson[] = [];
 
    private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -96,8 +95,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    createOrUpdate() {
       if (
          !this.title.trim().length || !this.duration.trim().length ||
-         !this.unit || !this.videoId.trim().length ||
-         !this.description.trim().length
+         !this.unit || !this.description.trim().length
       ) {
          this._snackbar.open(`Ma'lumotlarni to'liq kiriting`, 'OK', {
             duration: 5000
@@ -109,7 +107,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       formData.append('title', this.title);
       formData.append('duration', this.duration);
       formData.append('unit', this.unit);
-      formData.append('videoId', this.videoId);
       formData.append('description', this.description);
 
       if (this.video) {
@@ -156,7 +153,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.title = lesson?.title;
       this.duration = lesson?.duration;
       this.unit = lesson?.unit;
-      this.videoId = lesson?.videoId;
       this.description = lesson?.description;
       this.files = [];
       this.video = null;
@@ -167,7 +163,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.title = '';
       this.duration = '';
       this.unit = '';
-      this.videoId = '';
       this.description = '';
       this.files = [];
       this.video = null;

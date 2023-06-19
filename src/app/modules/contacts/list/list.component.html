@@ -39,11 +39,11 @@
                         </mat-form-field>
 
                         <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full">
-                            <mat-label>Skrinshot</mat-label>
+                            <mat-label>To'lov cheki</mat-label>
                             <mat-select [(ngModel)]="searchParams.screenshotSeen" (selectionChange)="getUserList()">
                                 <mat-option [value]="'all'">Hammasi</mat-option>
-                                <mat-option [value]="'seen'">Ko'rilgan</mat-option>
-                                <mat-option [value]="'not-seen'">Ko'rilmagan</mat-option>
+                                <mat-option [value]="'seen'">Ko'rilganlar</mat-option>
+                                <mat-option [value]="'not-seen'">Ko'rilmaganlar</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>

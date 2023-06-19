@@ -21,7 +21,8 @@ export class SettingsPlanBillingComponent implements OnInit {
       private _snackbar: MatSnackBar,
       private _settingsService: SettingsService,
       private _changeDetectorRef: ChangeDetectorRef
-   ) {}
+   ) {
+   }
 
    ngOnInit(): void {
       this.getScreenshots();
@@ -67,7 +68,7 @@ export class SettingsPlanBillingComponent implements OnInit {
          this.loaded = true;
          this.screenshots = res?.screenshots || [];
          this._changeDetectorRef.markForCheck();
-      })
+      });
    }
 
    @Confirmable({
@@ -78,6 +79,6 @@ export class SettingsPlanBillingComponent implements OnInit {
    deleteScreenshot(id: string) {
       this._settingsService.deleteScreenshot(id).subscribe(() => {
          this.getScreenshots();
-      })
+      });
    }
 }

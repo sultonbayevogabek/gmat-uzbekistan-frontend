@@ -26,7 +26,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
    searchParams = {
       screenshotSeen: 'all',
       name: '',
-      role: 'user'
+      role: 'all'
    }
    count: number = 0;
    users: IUser[] = [];

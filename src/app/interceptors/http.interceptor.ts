@@ -9,13 +9,16 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthService } from '../modules/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpHandlerInterceptor implements HttpInterceptor {
    constructor(
-      private _authService: AuthService
+      private _authService: AuthService,
+      private _router: Router
    ) {
    }
+
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       let newReq = req.clone();
 
@@ -30,7 +33,7 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
          tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
                console.group(
-                  '%c'+newReq.method,
+                  '%c' + newReq.method,
                   'color: white; background-color: #3B82F6; padding: 2px; border-radius: 5px',
                   newReq.url,
                   newReq.body,
@@ -43,6 +46,10 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
          catchError((error) => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
                this._authService.signOut();
+            }
+
+            if (error instanceof HttpErrorResponse && error.status >= 500) {
+               this._router.navigate(['/500']).then();
             }
 
             return throwError(error);

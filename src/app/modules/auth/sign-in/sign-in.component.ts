@@ -16,7 +16,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 export class AuthSignInComponent implements OnInit {
    @ViewChild('signInNgForm') signInNgForm: NgForm;
 
-   alert: { type: FuseAlertType; message: string } = { type: 'error', message: '' };
+   alert: { type: FuseAlertType; message: string } = { type: 'error', message: 'Tizimga kirishda noma\'lum xatolik yuz berdi' };
    signInForm: UntypedFormGroup;
    showAlert: boolean = false;
 
@@ -31,8 +31,8 @@ export class AuthSignInComponent implements OnInit {
    ngOnInit(): void {
       localStorage.clear();
       this.signInForm = this._formBuilder.group({
-            phone: [ '999639773', Validators.required ],
-            password: [ 'Ogabek19991031', [ Validators.required, Validators.minLength(6) ] ]
+            phone: [ '', Validators.required ],
+            password: [ '', [ Validators.required, Validators.minLength(6) ] ]
          }
       );
       this._socialAuthService.authState.subscribe((user) => {
@@ -47,7 +47,7 @@ export class AuthSignInComponent implements OnInit {
       });
    }
 
-   signUp(): void {
+   signIn(): void {
       if (this.signInForm.invalid) {
          return;
       }
@@ -59,15 +59,23 @@ export class AuthSignInComponent implements OnInit {
          phone: `+998${ phone }`, password
       }).subscribe(null, ({ error: { error } }) => {
             this.signInForm.enable();
+
             if (error === 'User has been blocked by system') {
                this.alert.message = `Foydalanuvchi bloklangan`;
             }
+
             if (error === 'User not found') {
                this.alert.message = `Bu raqam tizimda ro'yxatdan o'tmagan`;
             }
+
             if (error === 'Incorrect password') {
                this.alert.message = `Parol noto'g'ri`;
             }
+
+            if (error === 'This user has not yet set up a password') {
+               this.alert.message = `Parol o'rnatilmagan. Hisobingizga Google orqali kiring`;
+            }
+
             this.showAlert = true;
          }
       );
