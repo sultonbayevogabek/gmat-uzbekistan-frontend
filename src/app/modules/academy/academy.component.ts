@@ -15,17 +15,23 @@ export class AcademyComponent implements OnInit {
    ) {
    }
 
-   ngOnInit() {
-      if (!localStorage.getItem('dontShowSubsribeModal')) {
-         this._matDialog.open(SubscribeModalComponent, {
+   openSubscribeModal() {
+      if (!localStorage.getItem('dontShowSubscribeModal') || localStorage.getItem('dontShowSubscribeModal') !== 'true') {
+         const modal = this._matDialog.open(SubscribeModalComponent, {
             width: '500px',
          });
 
-         setInterval(() => {
-            this._matDialog.open(SubscribeModalComponent, {
-               width: '500px',
-            });
-         }, 5000);
+         setTimeout(() => {
+            modal.close();
+         }, 150000);
       }
+   }
+
+   ngOnInit() {
+      this.openSubscribeModal();
+
+      setInterval(() => {
+         this.openSubscribeModal();
+      }, 300000);
    }
 }

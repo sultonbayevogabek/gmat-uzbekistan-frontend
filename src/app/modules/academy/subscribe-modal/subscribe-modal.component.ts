@@ -8,7 +8,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 export class SubscribeModalComponent {
    dontShowSubscribeModal($event: MatCheckboxChange) {
-      console.log($event);
-      localStorage.setItem('dontShowSubscribeModal', 'true');
+      localStorage.setItem('dontShowSubscribeModal', String($event.checked));
    }
 }

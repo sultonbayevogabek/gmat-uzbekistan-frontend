@@ -11,8 +11,8 @@
         turing</p>
 </mat-dialog-content>
 
-<mat-dialog-actions class="flex items-center justify-between">
-    <mat-checkbox (change)="dontShowSubscribeModal($event)">Boshqa bu xabar ko'rsatilmasin</mat-checkbox>
+<mat-dialog-actions class="flex items-center justify-between gap-5 sm:gap-0 pb-4 sm:pb-2">
+    <mat-checkbox [color]="'primary'" (change)="dontShowSubscribeModal($event)">Boshqa bu xabar ko'rsatilmasin</mat-checkbox>
 
-    <button mat-flat-button color="primary">A'zo bo'lish</button>
+    <button class="w-full sm:w-auto" mat-flat-button color="primary">A'zo bo'lish</button>
 </mat-dialog-actions>
