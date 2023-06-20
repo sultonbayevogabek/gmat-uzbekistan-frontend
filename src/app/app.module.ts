@@ -18,8 +18,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
-    scrollPositionRestoration: 'enabled',
-    useHash: true
+    scrollPositionRestoration: 'enabled'
 };
 
 @NgModule({
