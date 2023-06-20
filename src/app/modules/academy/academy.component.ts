@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SubscribeModalComponent } from './subscribe-modal/subscribe-modal.component';
 
 @Component({
    selector: 'academy',
@@ -7,6 +9,23 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AcademyComponent {
+export class AcademyComponent implements OnInit {
+   constructor(
+      private _matDialog: MatDialog
+   ) {
+   }
 
+   ngOnInit() {
+      if (!localStorage.getItem('dontShowSubsribeModal')) {
+         this._matDialog.open(SubscribeModalComponent, {
+            width: '500px',
+         });
+
+         setInterval(() => {
+            this._matDialog.open(SubscribeModalComponent, {
+               width: '500px',
+            });
+         }, 5000);
+      }
+   }
 }

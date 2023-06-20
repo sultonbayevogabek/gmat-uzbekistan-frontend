@@ -14,7 +14,6 @@ import { SharedModule } from 'app/shared/shared.module';
 import { academyRoutes } from 'app/modules/academy/academy.routing';
 import { AcademyComponent } from 'app/modules/academy/academy.component';
 import { AcademyListComponent } from 'app/modules/academy/list/list.component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -24,6 +23,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { YoutubePlayer } from './youtube-player/youtube-player.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import { SubscribeModalComponent } from './subscribe-modal/subscribe-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
    declarations: [
@@ -31,7 +32,8 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
       AcademyListComponent,
       LessonModalComponent,
       YoutubePlayer,
-      VideoPlayerComponent
+      VideoPlayerComponent,
+      SubscribeModalComponent
    ],
    imports: [
       RouterModule.forChild(academyRoutes),
@@ -51,7 +53,8 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
       MatMenuModule,
       MatProgressSpinnerModule,
       MatDialogModule,
-      YouTubePlayerModule
+      YouTubePlayerModule,
+      MatCheckboxModule
    ]
 })
 

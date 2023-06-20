@@ -1,9 +1,8 @@
 <mat-dialog-content class="md:grid md:grid-cols-8 md:gap-6 items-start">
     <div class="md:col-span-5 bg-gray-100 md:rounded-xl overflow-hidden" #videoWrapper>
-        <video-player
-                class="w-full"
-                [videoUrl]="environment?.host + data?.videoUrl"
-        ></video-player>
+        <app-video
+                [videoId]="data?.videoId"
+        ></app-video>
     </div>
 
     <div class="md:col-span-3 pt-3 px-4 pb-6 md:p-0">

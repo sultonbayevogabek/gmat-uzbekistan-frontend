@@ -44,9 +44,14 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="col-span-3 fuse-mat-no-subscript">
+                <mat-form-field class="fuse-mat-no-subscript">
+                    <mat-label>Video ID</mat-label>
+                    <input type="text" matInput [(ngModel)]="videoId">
+                </mat-form-field>
+
+                <mat-form-field class="col-span-2 fuse-mat-no-subscript">
                     <mat-label>Darsga qisqacha tarif</mat-label>
-                    <textarea matInput [(ngModel)]="description"></textarea>
+                    <input matInput [(ngModel)]="description">
                 </mat-form-field>
 
                 <div class="col-span-3" *ngIf="files?.length">
@@ -76,32 +81,6 @@
                     </div>
                 </div>
 
-                <div class="col-span-3" *ngIf="video">
-                    <div class="font-medium">Dars videosi</div>
-
-                    <div class="grid grid-cols-3 gap-4">
-                        <div
-                                class="flex items-center p-2.5 shadow rounded bg-card mt-2">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-md overflow-hidden bg-primary-100">
-                                <div class="flex items-center justify-center text-sm font-semibold text-primary-500-800">
-                                    MP4
-                                </div>
-                            </div>
-                            <div class="ml-3 max-w-2/3">
-                                <div class="text-md font-medium truncate" [title]="video?.name">{{ video?.name }}</div>
-                                <div class="text-sm font-medium truncate text-secondary">{{ (video?.size / 1024 / 1024).toFixed(2) }}
-                                    MB
-                                </div>
-                            </div>
-
-                            <button class="self-start ml-auto" mat-icon-button (click)="this.video = null">
-                                <mat-icon class="icon-size-5 text-gray-500"
-                                          svgIcon="heroicons_outline:trash"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-span-3 flex justify-end gap-4 pt-4">
                     <label class="flex items-center justify-center px-5 gap-2 h-10 rounded-full hover:bg-hover cursor-pointer text-gray-600 font-medium"
                            matRipple>
@@ -114,19 +93,6 @@
                                 multiple
                                 #fileInput
                                 (change)="onPdfFilesSelected(fileInput.files)"
-                        >
-                    </label>
-
-                    <label class="flex items-center justify-center px-5 gap-2 h-10 rounded-full hover:bg-hover cursor-pointer text-gray-600 font-medium"
-                           matRipple>
-                        <mat-icon svgIcon="heroicons_outline:play"></mat-icon>
-                        <span>Dars videosini yuklash</span>
-                        <input
-                                class="hidden"
-                                type="file"
-                                accept="video/mp4"
-                                #videoFileInput
-                                (change)="onVideoFileSelected(videoFileInput.files)"
                         >
                     </label>
 
@@ -229,9 +195,9 @@
                     <div class="flex flex-col w-full mt-auto">
                         <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
                             <button mat-stroked-button (click)="openLesson(lesson)">
-                                <mat-icon *ngIf="!lesson?.videoUrl" class="mr-2 icon-size-5"
+                                <mat-icon *ngIf="!lesson?.videoId" class="mr-2 icon-size-5"
                                           [svgIcon]="'heroicons_solid:lock-closed'"></mat-icon>
-                                <mat-icon *ngIf="lesson?.videoUrl" class="mr-2 icon-size-5"
+                                <mat-icon *ngIf="lesson?.videoId" class="mr-2 icon-size-5"
                                           [svgIcon]="'heroicons_solid:eye'"></mat-icon>
                                 Darsni ko'rish
                             </button>

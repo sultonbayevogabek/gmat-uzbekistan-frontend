@@ -11,7 +11,7 @@ export class YoutubePlayer implements OnInit, AfterViewInit {
    videoHeight: number | undefined;
    videoWidth: number | undefined;
 
-   @Input('videoID') videoID: string;
+   @Input('videoId') videoId: string;
 
    constructor(
       private _changeDetectorRef: ChangeDetectorRef

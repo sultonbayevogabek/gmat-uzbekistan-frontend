@@ -1,0 +1,18 @@
+<mat-dialog-content>
+    <div class="flex items-center justify-between" mat-dialog-title>
+        <h1>Telegram kanal</h1>
+
+        <button class="ml-auto" mat-icon-button mat-dialog-close>
+            <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+        </button>
+    </div>
+
+    <p class="pb-5">"GMAT UZBEKISTAN" telegram kanalimizga a'zo bo'ling. Platformaga qo'shilayotgan yangiliklardan xabardor bo'lib
+        turing</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex items-center justify-between">
+    <mat-checkbox (change)="dontShowSubscribeModal($event)">Boshqa bu xabar ko'rsatilmasin</mat-checkbox>
+
+    <button mat-flat-button color="primary">A'zo bo'lish</button>
+</mat-dialog-actions>

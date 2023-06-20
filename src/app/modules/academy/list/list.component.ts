@@ -43,7 +43,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    unit: string = 'numbers';
    description: string = '';
    files = [];
-   video;
+   videoId: string = '';
    lessons: ILesson[] = [];
 
    private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -84,10 +84,6 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       }
    }
 
-   onVideoFileSelected(fileList: FileList) {
-      this.video = fileList[0];
-   }
-
    removeFile(i: number) {
       this.files.splice(i, 1);
    }
@@ -95,7 +91,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    createOrUpdate() {
       if (
          !this.title.trim().length || !this.duration.trim().length ||
-         !this.unit || !this.description.trim().length
+         !this.unit || !this.description.trim().length || !this.videoId?.trim()
       ) {
          this._snackbar.open(`Ma'lumotlarni to'liq kiriting`, 'OK', {
             duration: 5000
@@ -108,10 +104,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       formData.append('duration', this.duration);
       formData.append('unit', this.unit);
       formData.append('description', this.description);
-
-      if (this.video) {
-         formData.append('video', this.video);
-      }
+      formData.append('videoId', this.videoId);
 
       this.files.forEach(file => {
          formData.append('files', file);
@@ -154,8 +147,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.duration = lesson?.duration;
       this.unit = lesson?.unit;
       this.description = lesson?.description;
+      this.videoId = lesson?.videoId;
       this.files = [];
-      this.video = null;
    }
 
    clear() {
@@ -164,8 +157,8 @@ export class AcademyListComponent implements OnInit, OnDestroy {
       this.duration = '';
       this.unit = '';
       this.description = '';
+      this.videoId = '';
       this.files = [];
-      this.video = null;
       this._changeDetectorRef.markForCheck();
    }
 
@@ -182,7 +175,7 @@ export class AcademyListComponent implements OnInit, OnDestroy {
    }
 
    openLesson(lesson: ILesson) {
-      if (lesson?.videoUrl) {
+      if (lesson?.videoId) {
          this._academyService.incrementViewsCount(lesson?.id);
 
          this._matDialog.open(LessonModalComponent, {
