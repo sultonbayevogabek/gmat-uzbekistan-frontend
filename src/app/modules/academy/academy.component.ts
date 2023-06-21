@@ -23,15 +23,13 @@ export class AcademyComponent implements OnInit {
 
          setTimeout(() => {
             modal.close();
-         }, 150000);
+         }, 300000);
       }
    }
 
    ngOnInit() {
-      this.openSubscribeModal();
-
       setInterval(() => {
          this.openSubscribeModal();
-      }, 300000);
+      }, 600000);
    }
 }
