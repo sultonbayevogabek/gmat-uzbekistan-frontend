@@ -25,6 +25,7 @@ import { YoutubePlayer } from './youtube-player/youtube-player.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { SubscribeModalComponent } from './subscribe-modal/subscribe-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {SearchableMultiselectModule} from "../searchable-multiselect/searchable-multiselect.module";
 
 @NgModule({
    declarations: [
@@ -35,27 +36,28 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
       VideoPlayerComponent,
       SubscribeModalComponent
    ],
-   imports: [
-      RouterModule.forChild(academyRoutes),
-      MatButtonModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatProgressBarModule,
-      MatSelectModule,
-      MatSidenavModule,
-      MatSlideToggleModule,
-      MatTooltipModule,
-      FuseFindByKeyPipeModule,
-      SharedModule,
-      MatRippleModule,
-      MatSnackBarModule,
-      MatMenuModule,
-      MatProgressSpinnerModule,
-      MatDialogModule,
-      YouTubePlayerModule,
-      MatCheckboxModule
-   ]
+    imports: [
+        RouterModule.forChild(academyRoutes),
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        FuseFindByKeyPipeModule,
+        SharedModule,
+        MatRippleModule,
+        MatSnackBarModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        YouTubePlayerModule,
+        MatCheckboxModule,
+        SearchableMultiselectModule
+    ]
 })
 
 export class AcademyModule {

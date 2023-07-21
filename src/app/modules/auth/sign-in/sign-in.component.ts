@@ -19,6 +19,44 @@ export class AuthSignInComponent implements OnInit {
    alert: { type: FuseAlertType; message: string } = { type: 'error', message: 'Tizimga kirishda noma\'lum xatolik yuz berdi' };
    signInForm: UntypedFormGroup;
    showAlert: boolean = false;
+   data = [
+       {
+           id: '1',
+           firstName: 'Kamron',
+           lastName: 'Sultonbayev'
+       },
+       {
+           id: '2',
+           firstName: 'Karim',
+           lastName: 'Salimov'
+       },
+       {
+           id: '3',
+           firstName: 'Ajab',
+           lastName: 'Karimov'
+       },
+       {
+           id: '4',
+           firstName: 'Solix',
+           lastName: 'Sotimov'
+       },
+       {
+           id: '5',
+           firstName: 'Munira',
+           lastName: 'Sultonbayev'
+       },
+       {
+           id: '6',
+           firstName: 'Sobit',
+           lastName: 'Salimov'
+       },
+       {
+           id: '7',
+           firstName: 'Asad',
+           lastName: 'Karimov'
+       }
+   ];
+   defaultValue = ['1', '2', '3']
 
    constructor(
       private _authService: AuthService,
@@ -48,6 +86,19 @@ export class AuthSignInComponent implements OnInit {
    }
 
    signIn(): void {
+       this.data = [
+           {
+               id: '6',
+               firstName: 'Sobit',
+               lastName: 'Salimov'
+           },
+           {
+               id: '7',
+               firstName: 'Asad',
+               lastName: 'Karimov'
+           }
+       ];
+       return;
       if (this.signInForm.invalid) {
          return;
       }
@@ -79,5 +130,9 @@ export class AuthSignInComponent implements OnInit {
             this.showAlert = true;
          }
       );
+   }
+
+   onSelect($event) {
+       console.log($event);
    }
 }

@@ -8,14 +8,14 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
    ngOnInit(): void {
-      window.addEventListener('contextmenu', (e) => {
-         e.preventDefault();
-      });
+      // window.addEventListener('contextmenu', (e) => {
+      //    e.preventDefault();
+      // });
 
-      window.addEventListener('keydown', e => {
-         if (e.key === 'F12') {
-            e.preventDefault()
-         }
-      })
+      // window.addEventListener('keydown', e => {
+      //    if (e.key === 'F12') {
+      //       e.preventDefault()
+      //    }
+      // })
    }
 }

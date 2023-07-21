@@ -1,0 +1,36 @@
+<mat-form-field [class]="classes">
+    <mat-label *ngIf="label">{{ label| transloco }}</mat-label>
+    <mat-select
+            [(ngModel)]="matSelectValue"
+            [multiple]="multiple"
+            [required]="required"
+            [placeholder]="selectBoxPlaceholder| transloco"
+            (selectionChange)="selectionChange($event)"
+    >
+        <mat-option
+                class="sticky top-0 z-10 bg-card"
+                disabled>
+            <input
+                    type="text"
+                    matInput
+                    [placeholder]="searchInputPlaceHolder| transloco"
+                    #searchInput
+            >
+            <mat-icon
+                    *ngIf="searchInput?.value?.length"
+                    class="absolute right-4 top-[11px] mr-0 cursor-pointer icon-size-5"
+                    svgIcon="heroicons_outline:x"
+                    (click)="searchInput.value = ''"
+            ></mat-icon>
+        </mat-option>
+        <mat-option
+                *ngIf="emptyOption && !multiple" [value]="null"
+        >{{ 'Белгиланмаган' }}</mat-option>
+        <mat-option
+                *ngFor="let option of options| search: optionTextKey: searchInput.value"
+                [value]="option[optionValueKey]"
+                [class.hidden]="option?.hidden"
+        >{{ option[optionTextKey] }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

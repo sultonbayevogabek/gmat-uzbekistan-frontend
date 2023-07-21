@@ -116,6 +116,16 @@
                     </mat-error>
                 </mat-form-field>
 
+                <searchable-multiselect
+                        [multiple]="true"
+                        [optionValueKey]="'id'"
+                        [optionTextKey]="'firstName'"
+                        [options]="data"
+                        [defaultValue]="defaultValue"
+                        [emptyOption]="true"
+                        (onSelectionChange)="onSelect($event)"
+                ></searchable-multiselect>
+
                 <!-- Submit button -->
                 <button
                         class="fuse-mat-button-large w-full mt-6"
@@ -137,8 +147,6 @@
                     <div class="mx-4 text-secondary">yoki</div>
                     <div class="flex-auto mt-px border-t"></div>
                 </div>
-
-
 
                 <div class="relative cursor-pointer" title="Google orqali kirish">
                     <button
